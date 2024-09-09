@@ -1,1 +1,94 @@
-/* Cascade Style Sheet for this website */
+:root
+{
+    /* fonts */
+    --regular-font: "Arial, Helvetica, sans-serif";
+    
+    --font-size-extra-large: 32px;
+    --font-size-large:24px;
+    --font-size-medium:18px;
+    --font-size-small:12px;
+
+    /* sizes */
+    --window-width: 800px;
+
+    --content-block-size: 200px;
+
+    --default-margin: 20px;
+    --default-icon-size: 40px;
+
+    /* colors */
+    --black: #000;
+    --white: #fff;
+}
+
+html, body
+{
+    width: var(--window-width);
+    margin: auto;
+    text-align: left;
+}
+
+header
+{
+    min-height: 48px;
+    display:flex;
+    justify-content: center;
+}
+
+footer
+{
+    background-color: black;
+    color:white;
+    font-size: 10px;
+    text-align: right;
+}
+
+p
+{
+    background-color: white;
+    color: darkslategray;
+    font-size: 12px;
+}
+
+.nav-menu
+{
+    list-style-type: none;
+    overflow: hidden;
+}
+
+.nav-menu-item
+{
+    float: left;
+}
+
+.nav-menu-item .menu-link
+{
+    display: block;
+    padding:16px;
+    text-align:center;
+    text-decoration: none;
+    background-color: lightblue;
+    color: white;
+}
+
+.menu-link:hover
+{ 
+    background-color: rgba(173, 216, 230, 0.541);
+}
+
+.form-group
+{
+    display: flex;
+    margin: 2px;
+}
+
+.control-label
+{
+    vertical-align: top;
+    width: 110px;
+}
+
+.form-control
+{
+    width: 400px;
+}
