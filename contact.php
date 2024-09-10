@@ -48,47 +48,47 @@
             switch($communcationPrefence)
             {
                 case "email":
-                    if($email == "")
+                    if(empty($email))
                     {
                         $emailErr = "Email is required";
                     }
                     break;
                 case "phone":
-                    if($phonenumber == "")
+                    if(empty($phonenumber))
                     {
                         $phonenumberErr = "Phone number is required";
                     }
                     break;
                 case "mail":
-                    if($streetname == "")
+                    if(empty($streetname))
                     {
                         $streetnameErr = "Street name is required";
                     }
-                    if($housenumber == "")
+                    if(empty($housenumber))
                     {
                         $housenumberErr = "House number is required";
                     }
-                    if($zipcode == "")
+                    if(empty($zipcode))
                     {
                         $zipcodeErr = "Zip code is required";
                     }
-                    if($city == "")
+                    if(empty($city))
                     {
                         $cityErr = "City is required";
                     }
                     break;
                 }
-                if($name == "")
+                if(empty($name))
                 {
                     $nameErr = "Name is required";
                 }
-                if($message == "")
+                if(empty($message))
                 {
                     $messageErr = "Message is required";
                 }
 
                 $valid = empty($nameErr) && empty($emailErr) && empty($phonenumberErr) && empty($streetnameErr) 
-                        && empty($housenumberErr) && emtpy($zipcodeErr) && empty($cityErr) && empty($messageErr); 
+                        && empty($housenumberErr) && empty($zipcodeErr) && empty($cityErr) && empty($messageErr); 
          }
     ?>
 
@@ -106,7 +106,7 @@
                     <option value="Mr">Mr.</option>
                     <option value="Mrs" <?php if($title == "Mrs"){?>selected<?php }?>>Mrs</option>
                 </select>
-                <?php if($titleErr != ""){?>
+                <?php if(!empty($titleErr)){?>
                     <span class="error">* <?php echo $titleErr; ?></span>
                 <?php }?>
             </div>
@@ -116,7 +116,7 @@
                 <label class="control-label" for="name">Full name</label>
                 <input id="name" name="name" type="text" placeholder="Full name" class="form-control" value="<?php echo $name?>">  </input>
 
-                <?php if($nameErr != ""){?>
+                <?php if(!empty($nameErr)){?>
                     <span class="error">* <?php echo $nameErr; ?></span>
                 <?php }?>
             </div>
@@ -126,7 +126,7 @@
                 <label class="control-label" for="email">Email</label>
                 <input id="email" name="email" type="text" placeholder="Example@email.com" class="form-control" value="<?php echo $email?>">
 
-                <?php if($emailErr != ""){?>
+                <?php if(!empty($emailErr)){?>
                     <span class="error">* <?php echo $emailErr; ?></span>
                 <?php }?>
             </div>
@@ -136,7 +136,7 @@
                 <label class="control-label" for="phonenumber">Phone number</label>
                 <input id="phonenumber" name="phonenumber" type="text" placeholder="+31612345678" class="form-control"
                  value="<?php echo $phonenumber?>">
-                <?php if($phonenumberErr != ""){?>
+                <?php if(!empty($phonenumberErr)){?>
                     <span class="error">* <?php echo $phonenumberErr; ?></span>
                 <?php }?>
 
@@ -147,7 +147,7 @@
                 <label class="control-label" for="streetname">Streetname</label>
                 <input id="streetname" name="streetname" type="text" placeholder="Streetname" class="form-control" value="<?php echo $streetname?>">
 
-                <?php if($streetnameErr != ""){?>
+                <?php if(!empty($streetnameErr)){?>
                     <span class="error">* <?php echo $streetnameErr; ?></span>
                 <?php }?>
             </div>
@@ -157,7 +157,7 @@
                 <label class="control-label" for="housenumber">nr. + addition</label>
                 <input id="housenumber" name="housenumber" type="text" placeholder="123 a" class="form-control" value="<?php echo $housenumber?>">
 
-                <?php if($housenumberErr != ""){?>
+                <?php if(!empty($housenumberErr)){?>
                     <span class="error">* <?php echo $housenumberErr; ?></span>
                 <?php }?>
             </div>
@@ -167,7 +167,7 @@
                 <label class="control-label" for="zipcode">zipcode</label>
                 <input id="zipcode" name="zipcode" type="text" placeholder="1234AB" class="form-control" value="<?php echo $zipcode?>">
 
-                <?php if($zipcodeErr != ""){?>
+                <?php if(!empty($zipcodeErr)){?>
                     <span class="error">* <?php echo $zipcodeErr; ?></span>
                 <?php }?>
             </div>
@@ -177,7 +177,7 @@
                 <label class="control-label" for="city">City</label>
                 <input id="city" name="city" type="text" placeholder="City" class="form-control" value="<?php echo $city?>">
 
-                <?php if($cityErr != ""){?>
+                <?php if(!empty($cityErr)){?>
                     <span class="error">* <?php echo $cityErr; ?></span>
                 <?php }?>
             </div>
@@ -211,7 +211,7 @@
                 <label class="control-label" for="message">Message</label>
                 <textarea id="message" name="message" class="form-control" placeholder="Message"><?php echo $message?></textarea>
 
-                <?php if($messageErr != ""){?>
+                <?php if(!empty($messageErr)){?>
                     <span class="error">* <?php echo $messageErr; ?></span>
                 <?php }?>
             </div>
