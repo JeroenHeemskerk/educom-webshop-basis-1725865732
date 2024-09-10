@@ -45,8 +45,6 @@
         
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // validate the 'POST' data
-            $data = getPostVar('title');
-            echo "<script>console.log('$data');</script>";
             $title = getPostVar('title');
             $name = getPostVar('name');
             $email = getPostVar('email');
