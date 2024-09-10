@@ -236,7 +236,18 @@
     else
     {
     ?>
-        YEET
+        Thank you for your message, we will be in contact soon. </br>
+        Your details are: <br>
+        Name: <?php echo $name?><br>
+        Email: <?php echo $email?><br>
+        Phone number: <?php echo $phonenumber?><br>
+        Streetname: <?php echo $streetname?><br>
+        House number + addition: <?php echo $housenumber?><br>
+        Zipcode: <?php echo $zipcode?><br>
+        City: <?php echo $city?><br>
+        Communication preference: <?php echo $communcationPrefence?><br>
+        Message: <?php echo $message?><br>
+        
     <?php
     }    
     ?>
