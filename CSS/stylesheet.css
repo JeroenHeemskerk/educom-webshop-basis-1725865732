@@ -92,3 +92,8 @@ p
 {
     width: 400px;
 }
+
+.form-group .error
+{
+    color: red;
+}

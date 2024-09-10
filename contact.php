@@ -31,9 +31,9 @@
         $titleErr = $nameErr = $emailErr = $phonenumberErr = $streetnameErr = 
         $housenumberErr = $zipcodeErr = $cityErr = $communcationPrefenceErr = $messageErr = "";
         $valid = false;
-        $RequiredFields = "";
         
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $valid = true;
             // validate the 'POST' data
                 $title = $_POST['title'];
                 $name = $_POST['name'];
@@ -53,7 +53,6 @@
                         {
                             $emailErr = "Email is required";
                             $valid = false;
-                            $RequiredFields.= "email, ";
                         }
                         break;
                     case "phone":
@@ -61,7 +60,6 @@
                         {
                             $phonenumberErr = "Phone number is required";
                             $valid = false;
-                            $RequiredFields.= "phonenumber, ";
                         }
                         break;
                     case "mail":
@@ -69,37 +67,34 @@
                         {
                             $streetnameErr = "Street name is required";
                             $valid = false;
-                            $RequiredFields.= "streetname, ";
                         }
                         if($housenumber == "")
                         {
                             $housenumberErr = "House number is required";
                             $valid = false;
-                            $RequiredFields.= "housenumber, ";
                         }
                         if($zipcode == "")
                         {
                             $zipcodeErr = "Zip code is required";
                             $valid = false;
-                            $RequiredFields.= "zipcode, ";
                         }
                         if($city == "")
                         {
                             $cityErr = "City is required";
                             $valid = false;
-                            $RequiredFields.= "city, ";
                         }
                         break;
                 }
                 if($name == "")
                 {
-                    $RequiredFields.= "name, ";
+                    $nameErr = "Name is required";
+                    $valid = false;
                 }
                 if($message == "")
                 {
-                    $RequiredFields.= "message, ";
+                    $messageErr = "Message is required";
+                    $valid = false;
                 }
-                echo "RequiredFields: " . $RequiredFields;
             // ....   
          }
     ?>
@@ -118,6 +113,9 @@
                     <option value="Mr">Mr.</option>
                     <option value="Mrs" <?php if($title == "Mrs"){?>selected<?php }?>>Mrs</option>
                 </select>
+                <?php if($titleErr != ""){?>
+                    <span class="error">* <?php echo $titleErr; ?></span>
+                <?php }?>
             </div>
 
             <!-- Text input-->
@@ -125,6 +123,9 @@
                 <label class="control-label" for="name">Full name</label>
                 <input id="name" name="name" type="text" placeholder="Full name" class="form-control" value="<?php echo $name?>">  </input>
 
+                <?php if($nameErr != ""){?>
+                    <span class="error">* <?php echo $nameErr; ?></span>
+                <?php }?>
             </div>
 
             <!-- Text input-->
@@ -132,13 +133,19 @@
                 <label class="control-label" for="email">Email</label>
                 <input id="email" name="email" type="text" placeholder="Example@email.com" class="form-control" value="<?php echo $email?>">
 
+                <?php if($emailErr != ""){?>
+                    <span class="error">* <?php echo $emailErr; ?></span>
+                <?php }?>
             </div>
 
             <!-- Text input-->
             <div class="form-group">
                 <label class="control-label" for="phonenumber">Phone number</label>
-                <input id="phonenumber" name="phonenumber" type="text" placeholder="+31612345678" class="form-control" value="<?php echo $phonenumber?>"
-                   >
+                <input id="phonenumber" name="phonenumber" type="text" placeholder="+31612345678" class="form-control"
+                 value="<?php echo $phonenumber?>">
+                <?php if($phonenumberErr != ""){?>
+                    <span class="error">* <?php echo $phonenumberErr; ?></span>
+                <?php }?>
 
             </div>
 
@@ -147,12 +154,19 @@
                 <label class="control-label" for="streetname">Streetname</label>
                 <input id="streetname" name="streetname" type="text" placeholder="Streetname" class="form-control" value="<?php echo $streetname?>">
 
+                <?php if($streetnameErr != ""){?>
+                    <span class="error">* <?php echo $streetnameErr; ?></span>
+                <?php }?>
             </div>
 
             <!-- Text input-->
             <div class="form-group">
                 <label class="control-label" for="housenumber">nr. + addition</label>
                 <input id="housenumber" name="housenumber" type="text" placeholder="123 a" class="form-control" value="<?php echo $housenumber?>">
+
+                <?php if($housenumberErr != ""){?>
+                    <span class="error">* <?php echo $housenumberErr; ?></span>
+                <?php }?>
             </div>
 
             <!-- Text input-->
@@ -160,6 +174,9 @@
                 <label class="control-label" for="zipcode">zipcode</label>
                 <input id="zipcode" name="zipcode" type="text" placeholder="1234AB" class="form-control" value="<?php echo $zipcode?>">
 
+                <?php if($zipcodeErr != ""){?>
+                    <span class="error">* <?php echo $zipcodeErr; ?></span>
+                <?php }?>
             </div>
 
             <!-- Text input-->
@@ -167,6 +184,9 @@
                 <label class="control-label" for="city">City</label>
                 <input id="city" name="city" type="text" placeholder="City" class="form-control" value="<?php echo $city?>">
 
+                <?php if($cityErr != ""){?>
+                    <span class="error">* <?php echo $cityErr; ?></span>
+                <?php }?>
             </div>
 
             <!-- Multiple Radios -->
@@ -197,6 +217,10 @@
             <div class="form-group">
                 <label class="control-label" for="message">Message</label>
                 <textarea id="message" name="message" class="form-control" placeholder="Message"><?php echo $message?></textarea>
+
+                <?php if($messageErr != ""){?>
+                    <span class="error">* <?php echo $messageErr; ?></span>
+                <?php }?>
             </div>
 
             <!-- Button -->
