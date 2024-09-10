@@ -26,6 +26,17 @@
 
 <body>
 <?php
+        function getPostVar($key, $default="")
+        {
+            if(!isset($_POST[$key]))
+            {
+                return $default;
+            }
+            $value = $_POST[$key];
+            $value = trim($value);
+            return $value;
+        }
+
         $title = $name = $email = $phonenumber = $streetname = 
         $housenumber = $zipcode = $city = $communcationPrefence = $message = "";
         $titleErr = $nameErr = $emailErr = $phonenumberErr = $streetnameErr = 
@@ -34,16 +45,18 @@
         
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // validate the 'POST' data
-            $title = $_POST['title'];
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $phonenumber = $_POST['phonenumber'];
-            $streetname = $_POST['streetname'];
-            $housenumber = $_POST['housenumber'];
-            $zipcode = $_POST['zipcode'];
-            $city = $_POST['city'];
-            $communcationPrefence = $_POST['communcationPrefence'];
-            $message = $_POST['message'];
+            $data = getPostVar('title');
+            echo "<script>console.log('$data');</script>";
+            $title = getPostVar('title');
+            $name = getPostVar('name');
+            $email = getPostVar('email');
+            $phonenumber = getPostVar('phonenumber');
+            $streetname = getPostVar('streetname');
+            $housenumber = getPostVar('housenumber');
+            $zipcode = getPostVar('zipcode');
+            $city = getPostVar('city');
+            $communcationPrefence = getPostVar('communcationPrefence');
+            $message = getPostVar('message');
 
             switch($communcationPrefence)
             {
@@ -93,7 +106,7 @@
     ?>
 
     <?php if(!$valid){?>
-    <form method="POST">
+    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
         <fieldset>
 
             <!-- Form Name -->
