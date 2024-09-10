@@ -26,6 +26,52 @@
 
 <body>
 <?php
+
+        $title = $name = $email = $phonenumber = $streetname = 
+        $housenumber = $zipcode = $city = $communcationPrefence = $message = "";
+        
+        $titleErr = $nameErr = $emailErr = $phonenumberErr = $streetnameErr = 
+        $housenumberErr = $zipcodeErr = $cityErr = $communcationPrefenceErr = $messageErr = "";
+        
+        $valid = false;
+
+        function validateEmail($value, &$error = "")
+        {
+            if(empty($value))
+            {
+                $error = "Email is required";
+                return false;
+            }
+            if(!filter_var($value, FILTER_VALIDATE_EMAIL))
+            {
+                $error = "Invalid email format";
+                return false;
+            }  
+            return true;
+        }
+        function validateData($key, $value)
+        {
+            if($key == 'phonenumber')
+            {
+            }
+            else if($key == 'zipcode')
+            {
+
+            }
+            else if($key == 'housenumber')
+            {
+
+            }
+            else if($key == 'name' || $key == 'city' || $key == 'streetname')
+            {
+
+            }
+            else if($key == 'message')
+            {
+
+            }
+        }
+
         function getPostVar($key, $default="")
         {
             if(!isset($_POST[$key]))
@@ -36,12 +82,6 @@
             $value = trim($value);
             return $value;
         }
-
-        $title = $name = $email = $phonenumber = $streetname = 
-        $housenumber = $zipcode = $city = $communcationPrefence = $message = "";
-        $titleErr = $nameErr = $emailErr = $phonenumberErr = $streetnameErr = 
-        $housenumberErr = $zipcodeErr = $cityErr = $communcationPrefenceErr = $messageErr = "";
-        $valid = false;
         
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // validate the 'POST' data
@@ -59,10 +99,7 @@
             switch($communcationPrefence)
             {
                 case "email":
-                    if(empty($email))
-                    {
-                        $emailErr = "Email is required";
-                    }
+                    validateEmail($email, $emailErr);
                     break;
                 case "phone":
                     if(empty($phonenumber))
