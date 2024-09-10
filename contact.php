@@ -33,69 +33,62 @@
         $valid = false;
         
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $valid = true;
             // validate the 'POST' data
-                $title = $_POST['title'];
-                $name = $_POST['name'];
-                $email = $_POST['email'];
-                $phonenumber = $_POST['phonenumber'];
-                $streetname = $_POST['streetname'];
-                $housenumber = $_POST['housenumber'];
-                $zipcode = $_POST['zipcode'];
-                $city = $_POST['city'];
-                $communcationPrefence = $_POST['communcationPrefence'];
-                $message = $_POST['message'];
+            $title = $_POST['title'];
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $phonenumber = $_POST['phonenumber'];
+            $streetname = $_POST['streetname'];
+            $housenumber = $_POST['housenumber'];
+            $zipcode = $_POST['zipcode'];
+            $city = $_POST['city'];
+            $communcationPrefence = $_POST['communcationPrefence'];
+            $message = $_POST['message'];
 
-                switch($communcationPrefence)
-                {
-                    case "email":
-                        if($email == "")
-                        {
-                            $emailErr = "Email is required";
-                            $valid = false;
-                        }
-                        break;
-                    case "phone":
-                        if($phonenumber == "")
-                        {
-                            $phonenumberErr = "Phone number is required";
-                            $valid = false;
-                        }
-                        break;
-                    case "mail":
-                        if($streetname == "")
-                        {
-                            $streetnameErr = "Street name is required";
-                            $valid = false;
-                        }
-                        if($housenumber == "")
-                        {
-                            $housenumberErr = "House number is required";
-                            $valid = false;
-                        }
-                        if($zipcode == "")
-                        {
-                            $zipcodeErr = "Zip code is required";
-                            $valid = false;
-                        }
-                        if($city == "")
-                        {
-                            $cityErr = "City is required";
-                            $valid = false;
-                        }
-                        break;
+            switch($communcationPrefence)
+            {
+                case "email":
+                    if($email == "")
+                    {
+                        $emailErr = "Email is required";
+                    }
+                    break;
+                case "phone":
+                    if($phonenumber == "")
+                    {
+                        $phonenumberErr = "Phone number is required";
+                    }
+                    break;
+                case "mail":
+                    if($streetname == "")
+                    {
+                        $streetnameErr = "Street name is required";
+                    }
+                    if($housenumber == "")
+                    {
+                        $housenumberErr = "House number is required";
+                    }
+                    if($zipcode == "")
+                    {
+                        $zipcodeErr = "Zip code is required";
+                    }
+                    if($city == "")
+                    {
+                        $cityErr = "City is required";
+                    }
+                    break;
                 }
                 if($name == "")
                 {
                     $nameErr = "Name is required";
-                    $valid = false;
                 }
                 if($message == "")
                 {
                     $messageErr = "Message is required";
-                    $valid = false;
                 }
-            // ....   
+
+                $valid = empty($nameErr) && empty($emailErr) && empty($phonenumberErr) && empty($streetnameErr) 
+                        && empty($housenumberErr) && emtpy($zipcodeErr) && empty($cityErr) && empty($messageErr); 
          }
     ?>
 
