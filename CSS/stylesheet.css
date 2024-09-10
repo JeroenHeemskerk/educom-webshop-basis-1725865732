@@ -26,6 +26,7 @@ html, body
     width: var(--window-width);
     margin: auto;
     text-align: left;
+    background-color: var(--white);
 }
 
 header
@@ -37,15 +38,14 @@ header
 
 footer
 {
-    background-color: black;
-    color:white;
+    background-color: var(--black);
+    color:var(--white);
     font-size: 10px;
     text-align: right;
 }
 
 p
 {
-    background-color: white;
     color: darkslategray;
     font-size: 12px;
 }
@@ -68,7 +68,7 @@ p
     text-align:center;
     text-decoration: none;
     background-color: lightblue;
-    color: white;
+    color: var(--white);
 }
 
 .menu-link:hover
