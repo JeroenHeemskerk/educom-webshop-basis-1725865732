@@ -90,10 +90,11 @@ p
 
 .form-control
 {
-    width: 400px;
+    width: 300px;
 }
 
 .form-group .error
 {
     color: red;
+    width: 385px;
 }

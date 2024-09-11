@@ -52,42 +52,91 @@
         case 'email':
             if(!filter_var($value, FILTER_VALIDATE_EMAIL))
             {
-                $error = "Invalid email format";
+                $error = "Invalid email format. Expected: example@example.com";
             }  
             break;
         
         case 'phonenumber':
         
-            //TODO: VALIDATE PHONE NUMBER
             //0612345678
             //OR
             //+31612345678
+            $pattern = '';
+            if(strlen($value) == 10)
+            {
+                $pattern = '/06[0-9]{8}/';
+            }
+            else if(strlen($value) == 12)
+            {
+                $pattern = '/[+]316[0-9]{8}/';
+            }
+            else
+            {
+                $error = "Phonenumber has an invalid format. Expected format: '0612345678' or '+31612345678'";
+                break;
+            }
+            if(!preg_match($pattern, $value))
+            {
+                $error = "Phonenumber has an invalid format. Expected format: '0612345678' or '+31612345678'";
+            }
+
             break;
         
         case 'zipcode':
-            //TODO: VALIDATE ZIP CODE
             //1234AB
+            $value = strtoupper($value);
+            $pattern = '/^[0-9]{4}[A-Z]{2}$/';
+            if(!preg_match($pattern, $value))
+            {
+                $error = "Zipcode has an invalid format. Expected format: '1234AB'";
+            }
             break;
 
         case 'housenumber':
-        
-            //TODO: VALIDATE HOUSE NUMBER
-            //123A
+            //123A01
+            $value = strtoupper($value);
+            $pattern = '/^[0-9]+[A-Z]?[0-9]*$/';
+            if(!preg_match($pattern, $value))
+            {
+                $error = "Housenumber has an invalid format. Expected format: '[number][1 addition letter][addition number]'";
+            }
             break;
 
         case 'name':
+            //only text
             if(empty($value))
             {
                 $error = $key." is required";
             }
+
+            $value = trim($value);
+            $pattern = '/^(((\p{L}\p{M}*+)+)\s*)+$/u';
+            if(!preg_match($pattern, $value))
+            {
+                $error = "Name can only contain letters and spaces";
+            }
             break;
-            //todo: VALIDATE NAME
-            //only text
+
         case 'city':
-        case 'streetname':
-            //TODO: VALIDATE CITY, STREETNAME
             //only text
+            $value = trim($value);
+            $pattern = '/^(((\p{L}\p{M}*+)+)\s*)+$/u';
+            if(!preg_match($pattern, $value))
+            {
+                $error = "City can only contain letters and spaces";
+            }
             break;
+
+        case 'streetname':
+            //only text
+            $value = trim($value);
+            $pattern = '/^(((\p{L}\p{M}*+)+)\s*)+$/u';
+            if(!preg_match($pattern, $value))
+            {
+                $error = "Streetname can only contain letters and spaces";
+            }
+            break;
+
         case 'communicationPreference':
             if(!($value == 'email' || $value == 'phone' || $value =='mail'))
             {
@@ -100,8 +149,8 @@
             {
                 $error = $key." is required";
             }
-            //TODO: VALIDATE MESSAGE
             //Remove unsafe characters (XSS)
+            $value = htmlspecialchars($value, ENT_QUOTES);
             break;
     }
     }
@@ -131,7 +180,6 @@
         $communicationPreference = getPostVar('communicationPreference', $communicationPreferenceErr);
         $message = getPostVar('message', $messageErr);
 
-        $requiredInputFilled = false;
 
         switch($communicationPreference)
         {
@@ -141,7 +189,7 @@
                     $emailErr = 'email is required';
                 }
                 $requiredInputFilled = !empty($email);
-                $valid = empty($emailErr);
+                $validInput = empty($emailErr);
                 break;
             case 'phone':
                 if(empty($phonenumber))
@@ -149,7 +197,7 @@
                     $phonenumberErr = 'email is required';
                 }
                 $requiredInputFilled = !empty($phonenumber);
-                $valid = empty($phonenumberErr);
+                $validInput = empty($phonenumberErr);
                 break;
             case 'mail':
                 if(empty($streetname))
@@ -169,7 +217,10 @@
                     $cityErr = 'city is required';
                 }
                 $requiredInputFilled = !empty($streetname) && !empty($housenumber) && !empty($zipcode) && !empty($city);
-                $valid = empty($streetnameErr) && empty($housenumberErr) && empty($zipcodeErr) && empty($cityErr);
+                $validInput = empty($streetnameErr) && empty($housenumberErr) && empty($zipcodeErr) && empty($cityErr);
+                break;
+                default:
+                    $requiredInputFilled = false;
                 break;
         }
         $validInput = empty($titleErr) && empty($nameErr) && empty($emailErr) && empty($phonenumberErr) && 
