@@ -1,43 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact us</title>
-
-    <link rel="stylesheet" href="./css/stylesheet.css">
-</head>
-
-<body>
-<header>
-    <h1>My Webshop</h1>
-    <ul class="nav-menu">
-        <li class="nav-menu-item">
-            <a href="index.html" class="menu-link">HOME</a>
-        </li>
-        <li class="nav-menu-item">
-            <a href="about.html" class="menu-link">ABOUT</a>
-        </li>
-        <li class="nav-menu-item">
-            <a href="contact.php" class="menu-link">CONTACT</a>
-        </li>
-    </ul>
-</header>
 <?php
-
-    $title = $name = $email = $phonenumber = $streetname = 
-    $housenumber = $zipcode = $city = $communicationPreference = $message = "";
-    
-    $titleErr = $nameErr = $emailErr = $phonenumberErr = $streetnameErr = 
-    $housenumberErr = $zipcodeErr = $cityErr = $communicationPreferenceErr = $messageErr = "";
-    
-    $emailPreference = $phonePreference = $mailPreference = false;
-    $validInput = false;
-    $requiredInputFilled = false;
-    $valid = false;
-
+    function showHeader()
+    {
+        require 'header.html';
+    }
     function validateData($key, &$value, &$error)
     {
         switch ($key)
@@ -155,7 +120,7 @@
     }
     }
 
-    function getPostVar($key, &$error)
+    function getContactPostVar($key, &$error)
     {
         if(!isset($_POST[$key]))
         {
@@ -167,18 +132,31 @@
         return $value;
     }
     
+    function showBody()
+    {
+        $title = $name = $email = $phonenumber = $streetname = 
+        $housenumber = $zipcode = $city = $communicationPreference = $message = "";
+        
+        $titleErr = $nameErr = $emailErr = $phonenumberErr = $streetnameErr = 
+        $housenumberErr = $zipcodeErr = $cityErr = $communicationPreferenceErr = $messageErr = "";
+        
+        $emailPreference = $phonePreference = $mailPreference = false;
+        $validInput = false;
+        $requiredInputFilled = false;
+        $valid = false;
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // validate the 'POST' data
-        $title = getPostVar('title', $titleErr);
-        $name = getPostVar('name', $nameErr);
-        $email = getPostVar('email', $emailErr);
-        $phonenumber = getPostVar('phonenumber', $phonenumberErr);
-        $streetname = getPostVar('streetname', $streetnameErr);
-        $housenumber = getPostVar('housenumber', $housenumberErr);
-        $zipcode = getPostVar('zipcode', $zipcodeErr);
-        $city = getPostVar('city',  $cityErr);
-        $communicationPreference = getPostVar('communicationPreference', $communicationPreferenceErr);
-        $message = getPostVar('message', $messageErr);
+        $title = getContactPostVar('title', $titleErr);
+        $name = getContactPostVar('name', $nameErr);
+        $email = getContactPostVar('email', $emailErr);
+        $phonenumber = getContactPostVar('phonenumber', $phonenumberErr);
+        $streetname = getContactPostVar('streetname', $streetnameErr);
+        $housenumber = getContactPostVar('housenumber', $housenumberErr);
+        $zipcode = getContactPostVar('zipcode', $zipcodeErr);
+        $city = getContactPostVar('city',  $cityErr);
+        $communicationPreference = getContactPostVar('communicationPreference', $communicationPreferenceErr);
+        $message = getContactPostVar('message', $messageErr);
 
 
         switch($communicationPreference)
@@ -231,9 +209,11 @@
 
         }?>
 
-    <?php if(!$valid){?>
-    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+    <?php 
+    if(!$valid){?>
+    <form method="POST" action="index.php?">
         <fieldset>
+        <input type="hidden" name="page" value="contact.php">
 
             <!-- Form Name -->
             <legend>Contact us</legend>
@@ -385,11 +365,12 @@
         Message: <?php echo $message?><br>
         
     <?php
-    }    
-    ?>
-<footer>
-    &copy 2024 Jochem Grootherder
-</footer>
-</body>
+    }
+    
+    function showFooter()
+    {
+        include 'footer.html';
+    }
 
-</html>
+}
+    ?>
