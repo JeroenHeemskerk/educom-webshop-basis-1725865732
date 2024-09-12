@@ -15,10 +15,13 @@
             break;
 
         case 'email':
-            if(!filter_var($value, FILTER_VALIDATE_EMAIL))
+            if(!empty($value))
             {
-                $error = "Invalid email format. Expected: example@example.com";
-            }  
+                if(!filter_var($value, FILTER_VALIDATE_EMAIL))
+                {
+                    $error = "Invalid email format. Expected: example@example.com";
+                }  
+            }
             break;
         
         case 'phonenumber':
@@ -26,44 +29,53 @@
             //0612345678
             //OR
             //+31612345678
-            $pattern = '';
-            if(strlen($value) == 10)
+            if(!empty($value))
             {
-                $pattern = '/06[0-9]{8}/';
-            }
-            else if(strlen($value) == 12)
-            {
-                $pattern = '/[+]316[0-9]{8}/';
-            }
-            else
-            {
-                $error = "Phonenumber has an invalid format. Expected format: '0612345678' or '+31612345678'";
-                break;
-            }
-            if(!preg_match($pattern, $value))
-            {
-                $error = "Phonenumber has an invalid format. Expected format: '0612345678' or '+31612345678'";
+                $pattern = '';
+                if(strlen($value) == 10)
+                {
+                    $pattern = '/06[0-9]{8}/';
+                }
+                else if(strlen($value) == 12)
+                {
+                    $pattern = '/[+]316[0-9]{8}/';
+                }
+                else
+                {
+                    $error = "Phonenumber has an invalid format. Expected format: '0612345678' or '+31612345678'";
+                    break;
+                }
+                if(!preg_match($pattern, $value))
+                {
+                    $error = "Phonenumber has an invalid format. Expected format: '0612345678' or '+31612345678'";
+                }
             }
 
             break;
         
         case 'zipcode':
             //1234AB
-            $value = strtoupper($value);
-            $pattern = '/^[0-9]{4}[A-Z]{2}$/';
-            if(!preg_match($pattern, $value))
+            if(!empty($value))
             {
-                $error = "Zipcode has an invalid format. Expected format: '1234AB'";
+                $value = strtoupper($value);
+                $pattern = '/^[0-9]{4}[A-Z]{2}$/';
+                if(!preg_match($pattern, $value))
+                {
+                    $error = "Zipcode has an invalid format. Expected format: '1234AB'";
+                }
             }
             break;
 
         case 'housenumber':
             //123A01
-            $value = strtoupper($value);
-            $pattern = '/^[0-9]+[A-Z]?[0-9]*$/';
-            if(!preg_match($pattern, $value))
+            if(!empty($value))
             {
-                $error = "Housenumber has an invalid format. Expected format: '[number][1 addition letter][addition number]'";
+                $value = strtoupper($value);
+                $pattern = '/^[0-9]+[A-Z]?[0-9]*$/';
+                if(!preg_match($pattern, $value))
+                {
+                    $error = "Housenumber has an invalid format. Expected format: '[number][1 addition letter][addition number]'";
+                }
             }
             break;
 
@@ -73,6 +85,8 @@
             {
                 $error = $key." is required";
             }
+            else
+            {
 
             $value = trim($value);
             $pattern = '/^(((\p{L}\p{M}*+)+)\s*)+$/u';
@@ -80,25 +94,34 @@
             {
                 $error = "Name can only contain letters and spaces";
             }
+        }
             break;
 
         case 'city':
             //only text
-            $value = trim($value);
-            $pattern = '/^(((\p{L}\p{M}*+)+)\s*)+$/u';
-            if(!preg_match($pattern, $value))
+            
+            if(!empty($value))
             {
-                $error = "City can only contain letters and spaces";
+                $value = trim($value);
+                $pattern = '/^(((\p{L}\p{M}*+)+)\s*)+$/u';
+                if(!preg_match($pattern, $value))
+                {
+                    $error = "City can only contain letters and spaces";
+                }
             }
             break;
 
         case 'streetname':
             //only text
-            $value = trim($value);
-            $pattern = '/^(((\p{L}\p{M}*+)+)\s*)+$/u';
-            if(!preg_match($pattern, $value))
+            
+            if(!empty($value))
             {
-                $error = "Streetname can only contain letters and spaces";
+                $value = trim($value);
+                $pattern = '/^(((\p{L}\p{M}*+)+)\s*)+$/u';
+                if(!preg_match($pattern, $value))
+                {
+                    $error = "Streetname can only contain letters and spaces";
+                }
             }
             break;
 
@@ -172,7 +195,7 @@
             case 'phone':
                 if(empty($phonenumber))
                 {
-                    $phonenumberErr = 'email is required';
+                    $phonenumberErr = 'phone number is required';
                 }
                 $requiredInputFilled = !empty($phonenumber);
                 $validInput = empty($phonenumberErr);
