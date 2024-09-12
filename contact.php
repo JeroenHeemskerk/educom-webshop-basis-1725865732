@@ -9,6 +9,8 @@
 
     <link rel="stylesheet" href="./css/stylesheet.css">
 </head>
+
+<body>
 <header>
     <h1>My Webshop</h1>
     <ul class="nav-menu">
@@ -23,8 +25,6 @@
         </li>
     </ul>
 </header>
-
-<body>
 <?php
 
     $title = $name = $email = $phonenumber = $streetname = 
@@ -387,9 +387,9 @@
     <?php
     }    
     ?>
-</body>
 <footer>
     &copy 2024 Jochem Grootherder
 </footer>
+</body>
 
 </html>
