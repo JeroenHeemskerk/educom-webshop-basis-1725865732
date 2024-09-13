@@ -1,5 +1,6 @@
 <?php
 
+define("allowedPages", ['home.php', 'about.php', 'contact.php']);
 $page = getRequestedPage();
 showResponsePage($page);
 function getRequestedPage()
@@ -13,7 +14,12 @@ function getRequestedPage()
     {
         $requestedPage = getUrlVar('page', 'home.php');
     }
-
+    
+    if(!in_array($requestedPage, allowedPages))
+    {
+        echo '<script>alert("Invalid page requested, redirecting to homepage");</script>';
+        $requestedPage = 'home.php';
+    }
     return $requestedPage;
 }
 
