@@ -31,27 +31,22 @@
             //+31612345678
             if(!empty($value))
             {
-                $pattern = '';
-                if(strlen($value) == 10)
+                //0612345678 
+                //OR 
+                //+31612345678 
+                $pattern = match(strlen($value)) {
+                    10 => '/06[0-9]{8}/', 
+                    12 => '/[+]316[0-9]{8}/',
+                    default => '' 
+                }; 
+            
+                if (empty($pattern) || !preg_match($pattern, $value)) 
                 {
-                    $pattern = '/06[0-9]{8}/';
-                }
-                else if(strlen($value) == 12)
-                {
-                    $pattern = '/[+]316[0-9]{8}/';
-                }
-                else
-                {
-                    $error = "Phonenumber has an invalid format. Expected format: '0612345678' or '+31612345678'";
-                    break;
-                }
-                if(!preg_match($pattern, $value))
-                {
-                    $error = "Phonenumber has an invalid format. Expected format: '0612345678' or '+31612345678'";
-                }
+                    $error = "Phonenumber has an invalid format. Expected format: '0612345678' or '+31612345678'"; 
+                }   
+                break; 
             }
 
-            break;
         
         case 'zipcode':
             //1234AB
