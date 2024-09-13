@@ -39,6 +39,8 @@ function getPostVar($key, $default="")
     }
     $value = $_POST[$key];
     $value = trim($value);
+    $value = stripslashes($value);
+    $value = htmlspecialchars($value);
     return $value;
 }
 
@@ -50,6 +52,8 @@ function getUrlVar($key, $default="")
     }
     $value = $_GET[$key];
     $value = trim($value);
+    $value = stripslashes($value);
+    $value = htmlspecialchars($value);
     return $value;	
 }
 

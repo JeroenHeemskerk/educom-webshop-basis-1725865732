@@ -140,12 +140,7 @@
 
     function getContactPostVar($key, &$error)
     {
-        if(!isset($_POST[$key]))
-        {
-            return "";
-        }
-        $value = $_POST[$key];
-        $value = trim($value);
+        $value = getPostVar($key);
         validateData($key,$value, $error);
         return $value;
     }
