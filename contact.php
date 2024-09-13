@@ -1,8 +1,8 @@
 <?php
-define ("GENDERS" , array('Mr.' => 'Mr.', 'Mrs' => 'Mrs.', 'Other' => 'Other'));
+define ("GENDERS" , array('Mr.' => 'Mr.', 'Mrs.' => 'Mrs.', 'Other' => 'Other'));
 define ("COMMUNICATION_PREFERENCES", array('email' => 'Email', 'phone' => 'Phone', 'mail' => 'Mail'));
 
-function getContactMetaData()
+function getContactFormData()
 {
     return
     [
@@ -19,81 +19,70 @@ function getContactMetaData()
     ];
 }
 
-    function showFormField($key, $metaData)
+    function showFormField($key, $metaData, $formResult)
     {
-    /*
-    <div class="form-group">
-    <label class="control-label" for="name">Full name</label>
-    <input id="name" name="name" type="text" placeholder="Full name" class="form-control" value="<?php echo $name?>">  </input>
-
-    <?php if(!empty($nameErr)){?>
-        <span class="error">* <?php echo $nameErr; ?></span>
-    <?php }?>
-    */
         switch($metaData['type'])
         {
             case 'text':
                 echo '
                 <div class="form-group">
                 <label class="control-label">'.$metaData['label'].'</label>
-                <input name="'.$key.'" placeholder= "'.$metaData['placeholder'].'" class="form-control"></input>
+                <input class="form-control" name="'.$key.'" placeholder= "'.$metaData['placeholder'].'" value="'.$formResult['value'].'"></input>';
+                if(!empty($formResult['error']))
+                {
+                    echo '<span class="error">* '.$formResult['error'].'</span>';
+                }
+                echo '
                 </div>';
             break;
+
+            /*
+            <div class="form-group">
+                <label class="control-label" for="message">Message</label>
+                <textarea name="message" class="form-control" placeholder="Message"><?php echo $message?></textarea>
+
+                <?php if(!empty($messageErr)){?>
+                    <span class="error">* <?php echo $messageErr; ?></span>
+                <?php }?>
+            </div>
+            */
             case 'textarea':
                 echo '
                 <div class="form-group">
                 <label class="control-label">'.$metaData['label'].'</label>
-                <textarea name="'.$key.'" placeholder= "'.$metaData['placeholder'].'" class="form-control"></textarea>
+                <textarea class="form-control" name="'.$key.'" placeholder= "'.$metaData['placeholder'].'" ">'.$formResult['value'].'</textarea>';
+                if(!empty($formResult['error']))
+                {
+                    echo '<span class="error">* '.$formResult['error'].'</span>';
+                }
+                echo '
                 </div>';
             break;
             case'select':
-                /*<div class="form-group">
-                <label class="control-label" for="gender">Gender</label>
-                <select id="gender" name="gender">
-                <option value="Mr">Mr.</option>
-                    <option value="Mrs" <?php if($gender == "Mrs"){?>selected<?php }?>>Mrs.</option>
-                </select>
-                <?php if(!empty($genderErr)){?>
-                    <span class="error">* <?php echo $genderErr; ?></span>
-                <?php }?>
-            </div>
-                */
                 echo '
                 <div class="form-group">
                 <label class="control-label">'.$metaData['label'].'</label>
                 <select name="'.$key.'">';
                 foreach($metaData['options'] as $option_key => $option_value)
                 {
-                    echo '<option value="'.$option_key.'">'.$option_value.'</option>';
+                    echo '<option value="'.$option_key.'"';
+                    if($formResult['value'] == $option_key)
+                    {
+                        echo'selected';
+                    }
+                    echo' >'.$option_value.'</option>';
                 }
                 
-                echo '</select>
+                echo '</select>';
+                if(!empty($formResult['error']))
+                {
+                    echo '<span class="error">* '.$formResult['error'].'</span>';
+                }
+                echo '
                 </div>';
             break;
             case 'radio':
-                /*
-                <div class="form-group">
-                <label class="control-label" for="communicationPreference">Communication</label>
-                <label for="communicationPreference-0">
-                    <input type="radio" name="communicationPreference" value="email"
-                        checked="checked">
-                    Email
-                </label>
-                <div class="radio">
-                    <label for="communicationPreference-1">
-                        <input type="radio" name="communicationPreference" value="phone"
-                        <?php if($communicationPreference == "phone"){?>checked="checked"<?php }?>>
-                        Phone
-                    </label>
-                </div>
-                <div class="radio">
-                    <label for="communicationPreference-2">
-                        <input type="radio" name="communicationPreference" value="mail"
-                        <?php if($communicationPreference == "mail"){?>checked="checked"<?php }?>>
-                        Mail
-                    </label>
-                </div>
-                */
+                
                 echo '
                 <div class="form-group">
                 <label class="control-label">'.$metaData['label'].'</label>';
@@ -101,10 +90,19 @@ function getContactMetaData()
                 {
                     echo '
                     <div class="radio">
-                    <input type="radio" name= "'.$key.'" value="'.$option_key.'">'.$option_value.'</input>
+                    <input type="radio" name= "'.$key.'" value="'.$option_key.'"';
+                    if($formResult['value'] == $option_key)
+                    {
+                        echo'checked="checked"';
+                    }
+                    echo '>'.$option_value.'</input>
                     </div>';
                 }
-                echo'
+                if(!empty($formResult['error']))
+                {
+                    echo '<span class="error">* '.$formResult['error'].'</span>';
+                }
+                echo '
                 </div>';
             break;
             default:
@@ -121,9 +119,9 @@ function getContactMetaData()
         switch ($key)
         {
         case 'gender':
-            if(!($value == 'Mr' || $value == 'Mrs'))
+            if(!($value == 'Mr.' || $value == 'Mrs.' || $value == 'Other'))
             {
-                $error = $key." must be either Mr. or Mrs.";
+                $error = $key." must be either Mr., Mrs. or Other";
             }
             break;
 
@@ -234,7 +232,11 @@ function getContactMetaData()
             break;
 
         case 'communicationPreference':
-            if(!($value == 'email' || $value == 'phone' || $value =='mail'))
+            if(empty($value))
+            {
+                $error = $key." is required";
+            }
+            else if(!($value == 'email' || $value == 'phone' || $value =='mail'))
             {
                 $error = $key." must be either email, phone or mail";
             }
@@ -260,10 +262,6 @@ function getContactMetaData()
     
     function showBody()
     {
-        foreach(getContactMetaData() as $data_key => $data_value)
-        {
-            showFormField($data_key, $data_value);
-        }
         $gender = $name = $email = $phonenumber = $streetname = 
         $housenumber = $zipcode = $city = $communicationPreference = $message = "";
         
@@ -276,6 +274,31 @@ function getContactMetaData()
         $valid = false;
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        echo '<form method="POST" action="index.php?">
+        <fieldset>
+        <input type="hidden" name="page" value="contact.php">
+
+            <!-- Form Name -->
+            <legend>Contact us</legend>';
+
+        foreach(getContactFormData() as $data_key => $data_value)
+        {
+            $error = '';
+            $value = getContactPostVar($data_key, $error);
+            //echo "value: " . $value. " - error: ".$error."<br>";
+            $formResult = ['value' => $value, 'error' => $error];
+            showFormField($data_key, $data_value, $formResult);
+        }
+        echo'
+        <!-- Button -->
+            <div class="form-group">
+                <label class="control-label" for="send"></label>
+                <button name="send" class="btn btn-primary">Send</button>
+            </div>
+
+        </fieldset>
+    </form>';
+
         // validate the 'POST' data
         $gender = getContactPostVar('gender', $genderErr);
         $name = getContactPostVar('name', $nameErr);
@@ -337,6 +360,28 @@ function getContactMetaData()
         
         $valid = $validInput && $requiredInputFilled;
 
+        }
+        else
+        {
+            echo '
+            <form method="POST" action="index.php?">
+                <fieldset>
+                <input type="hidden" name="page" value="contact.php">
+
+                <!-- Form Name -->
+                <legend>Contact us</legend>';
+                foreach(getContactFormData() as $data_key => $data_value)
+                {
+                    $formResult = ['value' => '', 'error' => ''];
+                    showFormField($data_key, $data_value, $formResult);
+                }
+                echo'
+                <div class="form-group">
+                    <label class="control-label" for="send"></label>
+                    <button name="send" class="btn btn-primary">Send</button>
+                </div>
+                </fieldset>
+            </form>';
         }?>
 
     <?php 
@@ -352,8 +397,9 @@ function getContactMetaData()
             <div class="form-group">
                 <label class="control-label" for="gender">Gender</label>
                 <select id="gender" name="gender">
-                <option value="Mr">Mr.</option>
-                    <option value="Mrs" <?php if($gender == "Mrs"){?>selected<?php }?>>Mrs.</option>
+                <option value="Mr.">Mr.</option>
+                <option value="Mrs." <?php if($gender == "Mrs."){?>selected<?php }?>>Mrs.</option>
+                <option value="Other." <?php if($gender == "Other."){?>selected<?php }?>>Other</option>
                 </select>
                 <?php if(!empty($genderErr)){?>
                     <span class="error">* <?php echo $genderErr; ?></span>
@@ -502,5 +548,5 @@ function getContactMetaData()
         include 'footer.html';
     }
 
-}
+    }
     ?>
