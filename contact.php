@@ -6,16 +6,16 @@ function getContactFormData()
 {
     return
     [
-        'gender' => ['label' => 'Gender', 'type' => 'select', 'placeholder' => 'Mr.','options' => GENDERS],
-        'name'  => ['label' => 'Full Name', 'type' => 'text', 'placeholder' => 'Full name'],
-        'email' => ['label' => 'Email', 'type' => 'text', 'placeholder' => 'Example@example.com'],
-        'phonenumber' => ['label' => 'Phone Number', 'type' => 'text', 'placeholder' => '0612345678'],
-        'streetname' => ['label' => 'Streetname', 'type' => 'text', 'placeholder' => 'Streetname'],
-        'housenumber' => ['label' => 'Nr + addition', 'type' => 'text', 'placeholder' => '123A01'],
-        'zipcode' => ['label' => 'Zipcode', 'type' => 'text', 'placeholder' => '1234AB'],
-        'city' => ['label' => 'City', 'type' => 'text', 'placeholder' => 'City'],
-        'communicationPreference' => ['label' => 'Communication', 'type' => 'radio', 'placeholder' => 'Email', 'options' => COMMUNICATION_PREFERENCES],
-        'message' => ['label' => 'Message', 'type' => 'textarea', 'placeholder' => 'Message']
+        'gender' => ['label' => 'Gender', 'type' => 'select', 'placeholder' => 'Mr.','options' => GENDERS, 'validations' => ["notEmpty", "validOption"]],
+        'name'  => ['label' => 'Full Name', 'type' => 'text', 'placeholder' => 'Full name', 'validations' => ["notEmpty", "onlyCharacters"]],
+        'email' => ['label' => 'Email', 'type' => 'text', 'placeholder' => 'Example@example.com', 'validations' => ["notEmptyIf:communication:email", "validEmail"]],
+        'phonenumber' => ['label' => 'Phone Number', 'type' => 'text', 'placeholder' => '0612345678', 'validations' => ["notEmptyIf:communication:phone", "validPhoneNumber"]],
+        'streetname' => ['label' => 'Streetname', 'type' => 'text', 'placeholder' => 'Streetname', 'validations' => ["notEmptyIf:communication:mail", "onlyCharacters"]],
+        'housenumber' => ['label' => 'Nr + addition', 'type' => 'text', 'placeholder' => '123A01', 'validations' => ["notEmptyIf:communication:mail", "validHouseNumber"]],
+        'zipcode' => ['label' => 'Zipcode', 'type' => 'text', 'placeholder' => '1234AB', 'validations' => ["notEmptyIf:communication:mail", "validZipcode"]],
+        'city' => ['label' => 'City', 'type' => 'text', 'placeholder' => 'City', 'validations' => ["notEmptyIf:communication:mail", "onlyCharacters"]],
+        'communicationPreference' => ['label' => 'Communication', 'type' => 'radio', 'placeholder' => 'Email', 'options' => COMMUNICATION_PREFERENCES, 'validations' => ["notEmpty", "validOption"]],
+        'message' => ['label' => 'Message', 'type' => 'textarea', 'placeholder' => 'Message', 'validations' => ["notEmpty"]]
     ];
 }
 
@@ -35,17 +35,6 @@ function getContactFormData()
                 echo '
                 </div>';
             break;
-
-            /*
-            <div class="form-group">
-                <label class="control-label" for="message">Message</label>
-                <textarea name="message" class="form-control" placeholder="Message"><?php echo $message?></textarea>
-
-                <?php if(!empty($messageErr)){?>
-                    <span class="error">* <?php echo $messageErr; ?></span>
-                <?php }?>
-            </div>
-            */
             case 'textarea':
                 echo '
                 <div class="form-group">
@@ -116,6 +105,9 @@ function getContactFormData()
     }
     function validateData($key, &$value, &$error)
     {
+
+
+
         switch ($key)
         {
         case 'gender':
@@ -259,6 +251,30 @@ function getContactFormData()
         validateData($key,$value, $error);
         return $value;
     }
+
+    //1. Gather all data from POST request
+    //2. Validate all the data and store any errors
+    //2a Find out what the prefered communcation method is
+    function getDataFromPost($metaArray)
+    {
+        include 'formValidation.php';
+        $formResults = [];
+        foreach($metaArray as $key => $metaData)
+        {
+            $value = getPostVar($key);
+            $error = "";
+            $formResult = ['value' => $value, 'error' => $error];
+            $formResults[$key] = $formResult;
+        }
+        foreach($metaArray as $key => $metaData)
+        {
+            $formResult = validateField($key, $metaData, $formResults);
+        }
+    }
+
+
+    
+
     
     function showBody()
     {
@@ -281,13 +297,15 @@ function getContactFormData()
             <!-- Form Name -->
             <legend>Contact us</legend>';
 
-        foreach(getContactFormData() as $data_key => $data_value)
+            getDataFromPost(getContactFormData());
+
+        foreach(getContactFormData() as $key => $metaData)
         {
             $error = '';
-            $value = getContactPostVar($data_key, $error);
+            $value = getContactPostVar($key, $error);
             //echo "value: " . $value. " - error: ".$error."<br>";
             $formResult = ['value' => $value, 'error' => $error];
-            showFormField($data_key, $data_value, $formResult);
+            showFormField($key, $metaData, $formResult);
         }
         echo'
         <!-- Button -->
