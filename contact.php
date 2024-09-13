@@ -1,4 +1,117 @@
 <?php
+define ("GENDERS" , array('Mr.' => 'Mr.', 'Mrs' => 'Mrs.', 'Other' => 'Other'));
+define ("COMMUNICATION_PREFERENCES", array('email' => 'Email', 'phone' => 'Phone', 'mail' => 'Mail'));
+
+function getContactMetaData()
+{
+    return
+    [
+        'gender' => ['label' => 'Gender', 'type' => 'select', 'placeholder' => 'Mr.','options' => GENDERS],
+        'name'  => ['label' => 'Full Name', 'type' => 'text', 'placeholder' => 'Full name'],
+        'email' => ['label' => 'Email', 'type' => 'text', 'placeholder' => 'Example@example.com'],
+        'phonenumber' => ['label' => 'Phone Number', 'type' => 'text', 'placeholder' => '0612345678'],
+        'streetname' => ['label' => 'Streetname', 'type' => 'text', 'placeholder' => 'Streetname'],
+        'housenumber' => ['label' => 'Nr + addition', 'type' => 'text', 'placeholder' => '123A01'],
+        'zipcode' => ['label' => 'Zipcode', 'type' => 'text', 'placeholder' => '1234AB'],
+        'city' => ['label' => 'City', 'type' => 'text', 'placeholder' => 'City'],
+        'communicationPreference' => ['label' => 'Communication', 'type' => 'radio', 'placeholder' => 'Email', 'options' => COMMUNICATION_PREFERENCES],
+        'message' => ['label' => 'Message', 'type' => 'textarea', 'placeholder' => 'Message']
+    ];
+}
+
+    function showFormField($key, $metaData)
+    {
+    /*
+    <div class="form-group">
+    <label class="control-label" for="name">Full name</label>
+    <input id="name" name="name" type="text" placeholder="Full name" class="form-control" value="<?php echo $name?>">  </input>
+
+    <?php if(!empty($nameErr)){?>
+        <span class="error">* <?php echo $nameErr; ?></span>
+    <?php }?>
+    */
+        switch($metaData['type'])
+        {
+            case 'text':
+                echo '
+                <div class="form-group">
+                <label class="control-label">'.$metaData['label'].'</label>
+                <input name="'.$key.'" placeholder= "'.$metaData['placeholder'].'" class="form-control"></input>
+                </div>';
+            break;
+            case 'textarea':
+                echo '
+                <div class="form-group">
+                <label class="control-label">'.$metaData['label'].'</label>
+                <textarea name="'.$key.'" placeholder= "'.$metaData['placeholder'].'" class="form-control"></textarea>
+                </div>';
+            break;
+            case'select':
+                /*<div class="form-group">
+                <label class="control-label" for="gender">Gender</label>
+                <select id="gender" name="gender">
+                <option value="Mr">Mr.</option>
+                    <option value="Mrs" <?php if($gender == "Mrs"){?>selected<?php }?>>Mrs.</option>
+                </select>
+                <?php if(!empty($genderErr)){?>
+                    <span class="error">* <?php echo $genderErr; ?></span>
+                <?php }?>
+            </div>
+                */
+                echo '
+                <div class="form-group">
+                <label class="control-label">'.$metaData['label'].'</label>
+                <select name="'.$key.'">';
+                foreach($metaData['options'] as $option_key => $option_value)
+                {
+                    echo '<option value="'.$option_key.'">'.$option_value.'</option>';
+                }
+                
+                echo '</select>
+                </div>';
+            break;
+            case 'radio':
+                /*
+                <div class="form-group">
+                <label class="control-label" for="communicationPreference">Communication</label>
+                <label for="communicationPreference-0">
+                    <input type="radio" name="communicationPreference" value="email"
+                        checked="checked">
+                    Email
+                </label>
+                <div class="radio">
+                    <label for="communicationPreference-1">
+                        <input type="radio" name="communicationPreference" value="phone"
+                        <?php if($communicationPreference == "phone"){?>checked="checked"<?php }?>>
+                        Phone
+                    </label>
+                </div>
+                <div class="radio">
+                    <label for="communicationPreference-2">
+                        <input type="radio" name="communicationPreference" value="mail"
+                        <?php if($communicationPreference == "mail"){?>checked="checked"<?php }?>>
+                        Mail
+                    </label>
+                </div>
+                */
+                echo '
+                <div class="form-group">
+                <label class="control-label">'.$metaData['label'].'</label>';
+                foreach($metaData['options'] as $option_key => $option_value)
+                {
+                    echo '
+                    <div class="radio">
+                    <input type="radio" name= "'.$key.'" value="'.$option_key.'">'.$option_value.'</input>
+                    </div>';
+                }
+                echo'
+                </div>';
+            break;
+            default:
+            break;
+        }
+    
+    }
     function showHeader()
     {
         require 'header.html';
@@ -7,7 +120,7 @@
     {
         switch ($key)
         {
-        case 'title':
+        case 'gender':
             if(!($value == 'Mr' || $value == 'Mrs'))
             {
                 $error = $key." must be either Mr. or Mrs.";
@@ -147,10 +260,14 @@
     
     function showBody()
     {
-        $title = $name = $email = $phonenumber = $streetname = 
+        foreach(getContactMetaData() as $data_key => $data_value)
+        {
+            showFormField($data_key, $data_value);
+        }
+        $gender = $name = $email = $phonenumber = $streetname = 
         $housenumber = $zipcode = $city = $communicationPreference = $message = "";
         
-        $titleErr = $nameErr = $emailErr = $phonenumberErr = $streetnameErr = 
+        $genderErr = $nameErr = $emailErr = $phonenumberErr = $streetnameErr = 
         $housenumberErr = $zipcodeErr = $cityErr = $communicationPreferenceErr = $messageErr = "";
         
         $emailPreference = $phonePreference = $mailPreference = false;
@@ -160,7 +277,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // validate the 'POST' data
-        $title = getContactPostVar('title', $titleErr);
+        $gender = getContactPostVar('gender', $genderErr);
         $name = getContactPostVar('name', $nameErr);
         $email = getContactPostVar('email', $emailErr);
         $phonenumber = getContactPostVar('phonenumber', $phonenumberErr);
@@ -214,7 +331,7 @@
                     $requiredInputFilled = false;
                 break;
         }
-        $validInput = empty($titleErr) && empty($nameErr) && empty($emailErr) && empty($phonenumberErr) && 
+        $validInput = empty($genderErr) && empty($nameErr) && empty($emailErr) && empty($phonenumberErr) && 
                     empty($streetnameErr) && empty($housenumberErr) && empty($zipcodeErr) && empty($cityErr) &&
                     empty($communicationPreferenceErr) && empty($messageErr);
         
@@ -233,20 +350,20 @@
 
             <!-- Select Basic -->
             <div class="form-group">
-                <label class="control-label" for="title">Title</label>
-                <select id="title" name="title">
+                <label class="control-label" for="gender">Gender</label>
+                <select id="gender" name="gender">
                 <option value="Mr">Mr.</option>
-                    <option value="Mrs" <?php if($title == "Mrs"){?>selected<?php }?>>Mrs.</option>
+                    <option value="Mrs" <?php if($gender == "Mrs"){?>selected<?php }?>>Mrs.</option>
                 </select>
-                <?php if(!empty($titleErr)){?>
-                    <span class="error">* <?php echo $titleErr; ?></span>
+                <?php if(!empty($genderErr)){?>
+                    <span class="error">* <?php echo $genderErr; ?></span>
                 <?php }?>
             </div>
 
             <!-- Text input-->
             <div class="form-group">
                 <label class="control-label" for="name">Full name</label>
-                <input id="name" name="name" type="text" placeholder="Full name" class="form-control" value="<?php echo $name?>">  </input>
+                <input name="name" type="text" placeholder="Full name" class="form-control" value="<?php echo $name?>">  </input>
 
                 <?php if(!empty($nameErr)){?>
                     <span class="error">* <?php echo $nameErr; ?></span>
@@ -256,7 +373,7 @@
             <!-- Text input-->
             <div class="form-group">
                 <label class="control-label" for="email">Email</label>
-                <input id="email" name="email" type="text" placeholder="Example@email.com" class="form-control" value="<?php echo $email?>">
+                <input name="email" type="text" placeholder="Example@email.com" class="form-control" value="<?php echo $email?>">
 
                 <?php if(!empty($emailErr)){?>
                     <span class="error">* <?php echo $emailErr; ?></span>
@@ -266,7 +383,7 @@
             <!-- Text input-->
             <div class="form-group">
                 <label class="control-label" for="phonenumber">Phone number</label>
-                <input id="phonenumber" name="phonenumber" type="text" placeholder="+31612345678" class="form-control"
+                <input name="phonenumber" type="text" placeholder="+31612345678" class="form-control"
                  value="<?php echo $phonenumber?>">
                 <?php if(!empty($phonenumberErr)){?>
                     <span class="error">* <?php echo $phonenumberErr; ?></span>
@@ -277,7 +394,7 @@
             <!-- Text input-->
             <div class="form-group">
                 <label class="control-label" for="streetname">Streetname</label>
-                <input id="streetname" name="streetname" type="text" placeholder="Streetname" class="form-control" value="<?php echo $streetname?>">
+                <input name="streetname" type="text" placeholder="Streetname" class="form-control" value="<?php echo $streetname?>">
 
                 <?php if(!empty($streetnameErr)){?>
                     <span class="error">* <?php echo $streetnameErr; ?></span>
@@ -287,7 +404,7 @@
             <!-- Text input-->
             <div class="form-group">
                 <label class="control-label" for="housenumber">nr. + addition</label>
-                <input id="housenumber" name="housenumber" type="text" placeholder="123 a" class="form-control" value="<?php echo $housenumber?>">
+                <input name="housenumber" type="text" placeholder="123 a" class="form-control" value="<?php echo $housenumber?>">
 
                 <?php if(!empty($housenumberErr)){?>
                     <span class="error">* <?php echo $housenumberErr; ?></span>
@@ -297,7 +414,7 @@
             <!-- Text input-->
             <div class="form-group">
                 <label class="control-label" for="zipcode">zipcode</label>
-                <input id="zipcode" name="zipcode" type="text" placeholder="1234AB" class="form-control" value="<?php echo $zipcode?>">
+                <input name="zipcode" type="text" placeholder="1234AB" class="form-control" value="<?php echo $zipcode?>">
 
                 <?php if(!empty($zipcodeErr)){?>
                     <span class="error">* <?php echo $zipcodeErr; ?></span>
@@ -307,7 +424,7 @@
             <!-- Text input-->
             <div class="form-group">
                 <label class="control-label" for="city">City</label>
-                <input id="city" name="city" type="text" placeholder="City" class="form-control" value="<?php echo $city?>">
+                <input name="city" type="text" placeholder="City" class="form-control" value="<?php echo $city?>">
 
                 <?php if(!empty($cityErr)){?>
                     <span class="error">* <?php echo $cityErr; ?></span>
@@ -318,20 +435,20 @@
             <div class="form-group">
                 <label class="control-label" for="communicationPreference">Communication</label>
                 <label for="communicationPreference-0">
-                    <input type="radio" name="communicationPreference" id="communicationPreference-email" value="email"
+                    <input type="radio" name="communicationPreference" value="email"
                         checked="checked">
                     Email
                 </label>
                 <div class="radio">
                     <label for="communicationPreference-1">
-                        <input type="radio" name="communicationPreference" id="communicationPreference-phone" value="phone"
+                        <input type="radio" name="communicationPreference" value="phone"
                         <?php if($communicationPreference == "phone"){?>checked="checked"<?php }?>>
                         Phone
                     </label>
                 </div>
                 <div class="radio">
                     <label for="communicationPreference-2">
-                        <input type="radio" name="communicationPreference" id="communicationPreference-mail" value="mail"
+                        <input type="radio" name="communicationPreference" value="mail"
                         <?php if($communicationPreference == "mail"){?>checked="checked"<?php }?>>
                         Mail
                     </label>
@@ -345,7 +462,7 @@
             <!-- Textarea -->
             <div class="form-group">
                 <label class="control-label" for="message">Message</label>
-                <textarea id="message" name="message" class="form-control" placeholder="Message"><?php echo $message?></textarea>
+                <textarea name="message" class="form-control" placeholder="Message"><?php echo $message?></textarea>
 
                 <?php if(!empty($messageErr)){?>
                     <span class="error">* <?php echo $messageErr; ?></span>
@@ -355,7 +472,7 @@
             <!-- Button -->
             <div class="form-group">
                 <label class="control-label" for="send"></label>
-                <button id="send" name="send" class="btn btn-primary">Send</button>
+                <button name="send" class="btn btn-primary">Send</button>
             </div>
 
         </fieldset>
