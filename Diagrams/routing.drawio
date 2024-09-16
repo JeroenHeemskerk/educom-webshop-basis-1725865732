@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="BP4IyV99Q6ScG7P9Ww7g" name="Page-1">
-        <mxGraphModel dx="1066" dy="667" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="878" dy="549" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -179,7 +179,7 @@
                     <mxGeometry x="650" y="680" width="200" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="102" value="startSession" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="648" y="760" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="650" y="760" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="103" value="showForm" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
                     <mxGeometry x="750" y="720" width="100" height="40" as="geometry"/>
@@ -197,10 +197,10 @@
                     <mxGeometry x="785" y="700" width="30" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="108" value="Page = login" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="648" y="800" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="650" y="800" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="152" value="storeResults" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-                    <mxGeometry x="648" y="720" width="100" height="40" as="geometry"/>
+                    <mxGeometry x="650" y="720" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="124" value="Data in PostData" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" vertex="1" parent="1">
                     <mxGeometry x="1070" y="520" width="200" height="60" as="geometry"/>
@@ -291,6 +291,18 @@
                 </mxCell>
                 <mxCell id="150" value="false" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="144">
                     <mxGeometry x="121.5" y="20" width="27" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="153" value="Email: notEmpty, validEmail, notExist&lt;br&gt;Username: notExist, onlyLettersAndNumbers, minLength: 5&lt;br&gt;Password:&amp;nbsp;containsUppercase, containsLowercase, containsNumber,&amp;nbsp;containsSpecialChar&lt;br&gt;ConfirmPassword: matchesField&lt;br&gt;Phone: validPhone&lt;br&gt;Gender: validOption, notEmpty" style="shape=note;strokeWidth=2;fontSize=14;size=20;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#666600;" vertex="1" parent="1">
+                    <mxGeometry x="245" y="505" width="395" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="154" style="edgeStyle=none;html=1;endArrow=none;endFill=0;dashed=1;" edge="1" parent="1" source="153" target="99">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="157" style="edgeStyle=none;html=1;dashed=1;fontFamily=Helvetica;fontColor=#666600;endArrow=none;endFill=0;" edge="1" parent="1" source="156" target="134">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="156" value="Username: matchesExisting&lt;br&gt;Password: matchesUserPassword" style="shape=note;strokeWidth=2;fontSize=14;size=20;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontColor=#666600;fontFamily=Helvetica;" vertex="1" parent="1">
+                    <mxGeometry x="1320" y="520" width="230" height="80" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
