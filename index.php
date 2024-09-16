@@ -1,6 +1,7 @@
 <?php
 
 define("allowedPages", ['home.php', 'about.php', 'contact.php']);
+beginDocument();
 $page = getRequestedPage();
 showResponsePage($page);
 function getRequestedPage()
@@ -25,7 +26,6 @@ function getRequestedPage()
 
 function showResponsePage($requestedPage)
 {
-    beginDocument();
     showHeadSection();
     showBodySection($requestedPage);
     endDocument();
