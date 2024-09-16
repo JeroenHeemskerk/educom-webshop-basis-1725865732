@@ -17,17 +17,14 @@ define("contactData" , [
 ]);
 
 define("registerData",[
-    'Username' => ['label' => 'Username', 'type' => 'text', 'placeholder' => 'Username', 'validations' => ["notEmpty", "minLength:5",]],
     'Password' => ['label' => 'Password', 'type' => 'password', 'placeholder' => 'Password', 'validations' => ["notEmpty", "minLength:8", "containsUppercase", "containsLowercase", "containsNumber", "containsSpecialChar"]],
     'ConfirmPassword' => ['label' => 'Confirm Password', 'type' => 'password', 'placeholder' => 'Confirm Password', 'validations' => ["notEmpty", "matchesField"]],
-    'Gender' => ['label' => 'Gender', 'type' => 'select', 'placeholder' => 'Mr.','options' => $GENDERS, 'validations' => ["notEmpty", "validOption"]],
     'Name'  => ['label' => 'Full Name', 'type' => 'text', 'placeholder' => 'Full name', 'validations' => ["notEmpty", "onlyCharacters"]],
-    'Email' => ['label' => 'Email', 'type' => 'text', 'placeholder' => 'Example@example.com', 'validations' => ["notEmptyIf:communication:Email", "validEmail"]],
-    'Phonenumber' => ['label' => 'Phone Number', 'type' => 'text', 'placeholder' => '0612345678', 'validations' => ["notEmptyIf:communication:Phone", "validPhoneNumber"]]
-]);
+    'Email' => ['label' => 'Email', 'type' => 'text', 'placeholder' => 'Example@example.com', 'validations' => ["notEmpty", "validEmail", "uniqueEmail"]]
+    ]);
 
 define("loginData",[
-    'Username' => ['label' => 'Username', 'type' => 'text', 'placeholder' => 'Username', 'validations' => ["notEmpty", "minLength:5",]],
+    'Email' => ['label' => 'Email', 'type' => 'text', 'placeholder' => 'Example@example.com', 'validations' => ["notEmpty", "validEmail", "emailExists"]],
     'Password' => ['label' => 'Password', 'type' => 'password', 'placeholder' => 'Password', 'validations' => ["notEmpty", "minLength:8", "containsUppercase", "containsLowercase", "containsNumber", "containsSpecialChar"]]
 ]);
 
