@@ -47,7 +47,7 @@ function validateField($key, $metaData, &$formResults)
                     if(!empty($formResults[$key]['value']))
                     {
                         $formResults[$key]['value'] = trim($formResults[$key]['value']);
-                        $pattern = '/^(((\p{L}\p{M}*+)+)\s*)+$/u';
+                        $pattern = '/^((\p{L}\p{M}*+\-*\h*)+)$/u';
                         if(!preg_match($pattern, $formResults[$key]['value']))
                         {
                             $formResults[$key]['error'] = $key." can only contain letters and spaces";
