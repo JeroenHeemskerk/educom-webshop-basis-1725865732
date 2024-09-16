@@ -76,6 +76,36 @@ function showHeadSection()
     </head>';
 }
 
+function showHeader()
+{
+    echo '<header> <h1>My Webshop - ';
+    echo showTitle();
+    echo '</h1>';
+    showMenu();
+    echo '</header>';
+}
+
+function showMenu()
+{
+    echo '
+        <ul class="nav-menu">
+        <li class="nav-menu-item">
+            <a href="index.php?page=home.php" class="menu-link">HOME</a>
+        </li>
+        <li class="nav-menu-item">
+            <a href="index.php?page=about.php" class="menu-link">ABOUT</a>
+        </li>
+        <li class="nav-menu-item">
+            <a href="index.php?page=contact.php" class="menu-link">CONTACT</a>
+        </li>
+    </ul>';
+}
+
+function showFooter()
+{
+    echo '<footer> &copy 2024 Jochem Grootherder </footer>';
+}
+
 function showBodySection($requestedPage)
 {
     echo '<body>';

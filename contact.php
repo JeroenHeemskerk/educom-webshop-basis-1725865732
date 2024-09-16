@@ -138,9 +138,9 @@ function getContactFormData()
         </form>';
     }
 
-    function showHeader()
+    function showTitle()
     {
-        require 'header.html';
+        echo 'Contact';
     }
     
     function showBody()
@@ -189,9 +189,5 @@ function getContactFormData()
             }
             closeForm();
         }
-    }
-    function showFooter()
-    {
-        include 'footer.html';
     }
     ?>

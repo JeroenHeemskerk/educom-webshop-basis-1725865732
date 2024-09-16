@@ -1,7 +1,7 @@
 <?php
-    function showHeader()
+    function showTitle()
     {
-        include 'header.html';
+        echo 'About us';
     }
     function showBody()
     {
@@ -36,9 +36,5 @@
                 <li>Meeting with friends</li>
             </ul>
         </p>';
-    }
-    function showFooter()
-    {
-        include 'footer.html';
     }
 ?>
