@@ -1,6 +1,4 @@
 <?php
-//formresult staan results in en moeten de errors in opgeslagen worden
-//metaArray bevat de validatie methode
 include "defines.php";
 function validateField($key, $metaData, &$formResults)
     {
@@ -13,7 +11,7 @@ function validateField($key, $metaData, &$formResults)
                 case 'notEmpty':
                     if(empty($formResults[$key]['value']))
                     {
-                        $formResults[$key]['error'] = $key .' cannot be empty';
+                        $formResults[$key]['error'] = $key .' can not be empty';
                     }
                     break;
                 case 'validOption':
@@ -60,21 +58,21 @@ function validateField($key, $metaData, &$formResults)
                     switch($parts[1])
                     {
                         case 'communication:Email':
-                            if(empty($formResults[$key]['value']) && $formResults['communicationPreference']['value'] == 'Email')
+                            if(empty($formResults[$key]['value']) && $formResults['CommunicationPreference']['value'] == 'Email')
                             {
-                                $formResults[$key]['error'] = $key .' cannot be empty';
+                                $formResults[$key]['error'] = $key .' can not be empty';
                             }
                             break;
                         case 'communication:Phone':
-                            if(empty($formResults[$key]['value']) && $formResults['communicationPreference']['value'] == 'Phone')
+                            if(empty($formResults[$key]['value']) && $formResults['CommunicationPreference']['value'] == 'Phone')
                             {
-                                $formResults[$key]['error'] = $key .' cannot be empty';
+                                $formResults[$key]['error'] = $key .' can not be empty';
                             }
                             break;
                         case 'communication:Mail':
-                            if(empty($formResults[$key]['value']) && $formResults['communicationPreference']['value'] == 'Mail')
+                            if(empty($formResults[$key]['value']) && $formResults['CommunicationPreference']['value'] == 'Mail')
                             {
-                                $formResults[$key]['error'] = $key .' cannot be empty';
+                                $formResults[$key]['error'] = $key .' can not be empty';
                             }
                             break;
                     }
