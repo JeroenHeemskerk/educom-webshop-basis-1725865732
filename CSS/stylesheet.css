@@ -96,5 +96,5 @@ p
 .error
 {
     color: red;
-    width: 385px;
+    max-width: 340px;
 }

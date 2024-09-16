@@ -44,6 +44,23 @@ function getPostVar($key, $default="")
     return $value;
 }
 
+function getDataFromPost($metaArray)
+{
+    include 'formValidation.php';
+    $formResults = [];
+    foreach($metaArray as $key => $metaData)
+    {
+        $value = getPostVar($key);
+        $formResult = ['value' => $value, 'error' => ''];
+        $formResults[$key] = $formResult;
+    }
+    foreach($metaArray as $key => $metaData)
+    {
+        $formResult = validateField($key, $metaData, $formResults);
+    }
+    return $formResults;
+}
+
 function getUrlVar($key, $default="")
 {
     if(!isset($_GET[$key]))

@@ -120,4 +120,17 @@ function validateField($key, $metaData, &$formResults)
         }   
         return $formResults;
     }
+
+    function containsErrors($formResults)
+    {
+        $containsErrors = false;
+        foreach($formResults as $key => $formResult)
+        {
+            if(!empty($formResult['error']))
+            {
+                $containsErrors = true;
+            }
+        }
+        return $containsErrors;
+    }
 ?>
