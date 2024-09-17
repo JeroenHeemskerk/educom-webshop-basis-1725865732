@@ -2,36 +2,21 @@
 
 function showFormField($key, $metaData, $formResult)
 {
+    echo '
+    <div class="form-group">
+    <label class="control-label">'.$metaData['label'].'</label>';
     switch($metaData['type'])
     {
         case 'text':
             echo '
-            <div class="form-group">
-            <label class="control-label">'.$metaData['label'].'</label>
             <input class="form-control" name="'.$key.'" placeholder= "'.$metaData['placeholder'].'" value="'.$formResult['value'].'"></input>';
-            if(!empty($formResult['error']))
-            {
-                echo '<span class="error">* '.$formResult['error'].'</span>';
-            }
-            echo '
-            </div>';
         break;
         case 'textarea':
             echo '
-            <div class="form-group">
-            <label class="control-label">'.$metaData['label'].'</label>
             <textarea class="form-control" name="'.$key.'" placeholder= "'.$metaData['placeholder'].'" ">'.$formResult['value'].'</textarea>';
-            if(!empty($formResult['error']))
-            {
-                echo '<span class="error">* '.$formResult['error'].'</span>';
-            }
-            echo '
-            </div>';
         break;
         case'select':
             echo '
-            <div class="form-group">
-            <label class="control-label">'.$metaData['label'].'</label>
             <select name="'.$key.'">';
             foreach($metaData['options'] as $option_key => $option_value)
             {
@@ -44,18 +29,8 @@ function showFormField($key, $metaData, $formResult)
             }
             
             echo '</select>';
-            if(!empty($formResult['error']))
-            {
-                echo '<span class="error">* '.$formResult['error'].'</span>';
-            }
-            echo '
-            </div>';
         break;
         case 'radio':
-            
-            echo '
-            <div class="form-group">
-            <label class="control-label">'.$metaData['label'].'</label>';
             foreach($metaData['options'] as $option_key => $option_value)
             {
                 echo '
@@ -68,28 +43,24 @@ function showFormField($key, $metaData, $formResult)
                 echo '>'.$option_value.'</input>
                 </div>';
             }
-            if(!empty($formResult['error']))
-            {
-                echo '<span class="error">* '.$formResult['error'].'</span>';
-            }
-            echo '
-            </div>';
         break;
         case 'password':
             echo '
-            <div class="form-group">
-            <label class="control-label">'.$metaData['label'].'</label>
             <input class="form-control" type="password" name="'.$key.'" placeholder= "'.$metaData['placeholder'].'" value="'.$formResult['value'].'"></input>';
             if(!empty($formResult['error']))
             {
                 echo '<span class="error">* '.$formResult['error'].'</span>';
             }
-            echo '
-            </div>';
         break;
         default:
         break;
     }
+    
+    if(!empty($formResult['error']))
+    {
+        echo '<span class="error">* '.$formResult['error'].'</span>';
+    }
+    echo '</div>';
 
 }
 
