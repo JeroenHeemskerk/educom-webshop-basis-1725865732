@@ -41,7 +41,7 @@ function getUserFromFile($email)
 
 function userExists($email)
 {
-    return (getUserFromFile($email) != NULL) ? true : false;
+    return !empty(getUserFromFile($email));
 }
 
 ?>
