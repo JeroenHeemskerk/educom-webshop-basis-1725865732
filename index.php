@@ -68,7 +68,7 @@ function getPostVar($key, $default="")
 
 function getUrlVar($key, $default="")
 {
-    return getArrayVar($_POST, $key, $default);
+    return getArrayVar($_GET, $key, $default);
 }
 
 function beginDocument()
