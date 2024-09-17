@@ -3,12 +3,12 @@
 define("contactData" , [
     'Gender' => ['label' => 'Gender', 'type' => 'select', 'placeholder' => 'Mr.','options' => GENDERS, 'validations' => ["notEmpty", "validOption"]],
     'Name'  => ['label' => 'Full Name', 'type' => 'text', 'placeholder' => 'Full name', 'validations' => ["notEmpty", "onlyCharacters"]],
-    'Email' => ['label' => 'Email', 'type' => 'text', 'placeholder' => 'Example@example.com', 'validations' => ["notEmptyIf:communication:Email", "validEmail"]],
-    'Phonenumber' => ['label' => 'Phone Number', 'type' => 'text', 'placeholder' => '0612345678', 'validations' => ["notEmptyIf:communication:Phone", "validPhoneNumber"]],
-    'Streetname' => ['label' => 'Streetname', 'type' => 'text', 'placeholder' => 'Streetname', 'validations' => ["notEmptyIf:communication:Mail", "onlyCharacters"]],
-    'Housenumber' => ['label' => 'Nr + addition', 'type' => 'text', 'placeholder' => '123A01', 'validations' => ["notEmptyIf:communication:Mail", "validHouseNumber"]],
-    'Zipcode' => ['label' => 'Zipcode', 'type' => 'text', 'placeholder' => '1234AB', 'validations' => ["notEmptyIf:communication:Mail", "validZipcode"]],
-    'City' => ['label' => 'City', 'type' => 'text', 'placeholder' => 'City', 'validations' => ["notEmptyIf:communication:Mail", "onlyCharacters"]],
+    'Email' => ['label' => 'Email', 'type' => 'text', 'placeholder' => 'Example@example.com', 'validations' => ["notEmptyIf:CommunicationPreference:Email", "validEmail"]],
+    'Phonenumber' => ['label' => 'Phone Number', 'type' => 'text', 'placeholder' => '0612345678', 'validations' => ["notEmptyIf:CommunicationPreference:Phone", "validPhoneNumber"]],
+    'Streetname' => ['label' => 'Streetname', 'type' => 'text', 'placeholder' => 'Streetname', 'validations' => ["notEmptyIf:CommunicationPreference:Mail", "onlyCharacters"]],
+    'Housenumber' => ['label' => 'Nr + addition', 'type' => 'text', 'placeholder' => '123A01', 'validations' => ["notEmptyIf:CommunicationPreference:Mail", "validHouseNumber"]],
+    'Zipcode' => ['label' => 'Zipcode', 'type' => 'text', 'placeholder' => '1234AB', 'validations' => ["notEmptyIf:CommunicationPreference:Mail", "validZipcode"]],
+    'City' => ['label' => 'City', 'type' => 'text', 'placeholder' => 'City', 'validations' => ["notEmptyIf:CommunicationPreference:Mail", "onlyCharacters"]],
     'CommunicationPreference' => ['label' => 'Communication', 'type' => 'radio', 'placeholder' => 'Email', 'options' => COMMUNICATION_PREFERENCES, 'validations' => ["notEmpty", "validOption"]],
     'Message' => ['label' => 'Message', 'type' => 'textarea', 'placeholder' => 'Message', 'validations' => ["notEmpty"]]
 ]);

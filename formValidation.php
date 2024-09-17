@@ -4,7 +4,7 @@ function validateField($key, $metaData, &$formResults)
     {
         foreach($metaData['validations'] as $validation)
         {
-            $parts = explode(':', $validation, 2);
+            $parts = explode(':', $validation, 3);
             switch ($parts[0]){
                 case 'notEmpty':
                     if(empty($formResults[$key]['value']))
@@ -53,26 +53,9 @@ function validateField($key, $metaData, &$formResults)
                     }
                     break;
                 case 'notEmptyIf':
-                    switch($parts[1])
+                    if(empty($formResults[$key]['value']) && $formResults[$parts[1]]['value'] == $parts[2])
                     {
-                        case 'communication:Email':
-                            if(empty($formResults[$key]['value']) && $formResults['CommunicationPreference']['value'] == 'Email')
-                            {
-                                $formResults[$key]['error'] = $key .' can not be empty';
-                            }
-                            break;
-                        case 'communication:Phone':
-                            if(empty($formResults[$key]['value']) && $formResults['CommunicationPreference']['value'] == 'Phone')
-                            {
-                                $formResults[$key]['error'] = $key .' can not be empty';
-                            }
-                            break;
-                        case 'communication:Mail':
-                            if(empty($formResults[$key]['value']) && $formResults['CommunicationPreference']['value'] == 'Mail')
-                            {
-                                $formResults[$key]['error'] = $key .' can not be empty';
-                            }
-                            break;
+                        $formResults[$key]['error'] = $key." can not be empty";
                     }
                     break;
                 case 'validEmail':
