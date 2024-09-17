@@ -183,7 +183,7 @@ function validateField($key, $metaData, &$formResults)
         {
             if(!empty($formResult['error']))
             {
-                $containsErrors = true;
+                return true;
             }
         }
         return $containsErrors;
