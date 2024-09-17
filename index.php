@@ -31,19 +31,6 @@ function showResponsePage($requestedPage)
     endDocument();
 }
 
-function getPostVar($key, $default="")
-{
-    if(!isset($_POST[$key]))
-    {  
-        return $default;
-    }
-    $value = $_POST[$key];
-    $value = trim($value);
-    $value = stripslashes($value);
-    $value = htmlspecialchars($value);
-    return $value;
-}
-
 function getDataFromPost($metaArray)
 {
     include 'formValidation.php';
@@ -61,17 +48,27 @@ function getDataFromPost($metaArray)
     return $formResults;
 }
 
-function getUrlVar($key, $default="")
+function getArrayVar($array, $key, $default="")
 {
-    if(!isset($_GET[$key]))
+    if(!isset($array[$key]))
     {
         return $default;
     }
-    $value = $_GET[$key];
+    $value = $array[$key];
     $value = trim($value);
     $value = stripslashes($value);
     $value = htmlspecialchars($value);
-    return $value;	
+    return $value;
+}
+
+function getPostVar($key, $default="")
+{
+    return getArrayVar($_POST, $key, $default);
+}
+
+function getUrlVar($key, $default="")
+{
+    return getArrayVar($_POST, $key, $default);
 }
 
 function beginDocument()
