@@ -22,7 +22,7 @@ include "formBuilder.php";
                     $formResult = ['value' => $formResults[$key]['value'], 'error' => $formResults[$key]['error']];
                     showFormField($key, $metaData, $formResult);
                 }
-                closeForm();
+                closeForm("Send");
             }
             else //all data is valid. Show thank you message.
             {
@@ -43,7 +43,7 @@ include "formBuilder.php";
                 $formResult = ['value' => '', 'error' => ''];
                 showFormField($key, $metaData, $formResult);
             }
-            closeForm();
+            closeForm("Send");
         }
     }
     ?>

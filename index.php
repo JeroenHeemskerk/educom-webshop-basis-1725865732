@@ -1,6 +1,6 @@
 <?php
 
-define("allowedPages", ['home.php', 'about.php', 'contact.php']);
+define("allowedPages", ['home.php', 'about.php', 'contact.php', 'register.php', 'login.php']);
 beginDocument();
 $page = getRequestedPage();
 showResponsePage($page);
@@ -99,6 +99,7 @@ function showHeader()
     echo showTitle();
     echo '</h1>';
     showMenu();
+    showDropDownMenu();
     echo '</header>';
 }
 
@@ -116,6 +117,25 @@ function showMenu()
             <a href="index.php?page=contact.php" class="menu-link">CONTACT</a>
         </li>
     </ul>';
+}
+
+function showDropDownMenu()
+{
+    echo '
+    <div class="dropdown-menu">
+        <div class="dropdown-menu-trigger">
+            <div class="dropdown">
+                <ul class="dropdown-menu">
+                    <li class="dropdown-item">
+                        <a href="index.php?page=login.php" class="menu-link">LOGIN</a>
+                    </li>
+                    <li class="dropdown-item">
+                        <a href="index.php?page=register.php" class="menu-link">REGISTER</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>';
 }
 
 function showFooter()

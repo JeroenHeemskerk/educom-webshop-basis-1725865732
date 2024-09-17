@@ -75,6 +75,18 @@ function showFormField($key, $metaData, $formResult)
             echo '
             </div>';
         break;
+        case 'password':
+            echo '
+            <div class="form-group">
+            <label class="control-label">'.$metaData['label'].'</label>
+            <input class="form-control" type="password" name="'.$key.'" placeholder= "'.$metaData['placeholder'].'" value="'.$formResult['value'].'"></input>';
+            if(!empty($formResult['error']))
+            {
+                echo '<span class="error">* '.$formResult['error'].'</span>';
+            }
+            echo '
+            </div>';
+        break;
         default:
         break;
     }
@@ -91,12 +103,12 @@ function openForm($target, $legend)
             <legend>'.$legend.'</legend>';
 }
 
-function closeForm()
+function closeForm($buttonText)
 {
     echo'
             <div class="form-group">
                 <label class="control-label" for="send"></label>
-                <button name="send" class="btn btn-primary">Send</button>
+                <button name="send" class="btn btn-primary">'.$buttonText.'</button>
             </div>
         </fieldset>
     </form>';

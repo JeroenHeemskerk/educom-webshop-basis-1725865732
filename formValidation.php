@@ -1,5 +1,6 @@
 <?php
 include "defines.php";
+include "fileHandler.php";
 function validateField($key, $metaData, &$formResults)
     {
         global $COMMUNICATION_PREFERENCES;
@@ -115,6 +116,80 @@ function validateField($key, $metaData, &$formResults)
                         $formResults[$key]['error'] = "Zipcode has an invalid format. Expected format: '1234AB'";
                     }
                 }
+                    break;
+                case 'uniqueEmail':
+                    if(!empty($formResults[$key]['value']))
+                    {
+                        if(userExists($formResults[$key]['value']))
+                        {
+                            $formResults[$key]['error'] = "This email already exists";
+                        }
+                    }
+                    break;
+                case 'minLength':
+                    $minLength = $parts[1];
+                    if(strlen($formResults[$key]['value']) < $minLength)
+                    {
+                        $formResults[$key]['error'] = $key." must have at least ".$minLength." characters";
+                    }
+                    break;
+                case 'containsUppercase':
+                    if(!empty($formResults[$key]['value']))
+                    {
+                        if(!preg_match('/[A-Z]/', $formResults[$key]['value']))
+                        {
+                            $formResults[$key]['error'] = $key." must contain at least one uppercase letter";
+                        }
+                    }
+                    break;
+                case 'containsLowercase':
+                    if(!empty($formResults[$key]['value']))
+                    {
+                        if(!preg_match('/[a-z]/', $formResults[$key]['value']))
+                        {
+                            $formResults[$key]['error'] = $key." must contain at least one lowercase letter";
+                        }
+                    }
+                    break;
+                case 'containsNumber':
+                    if(!empty($formResults[$key]['value']))
+                    {
+                        if(!preg_match('/[0-9]/', $formResults[$key]['value']))
+                        {
+                            $formResults[$key]['error'] = $key." must contain at least one number";
+                        }
+                    }
+                    break;
+                case 'containsSpecialChar':
+                    
+                    if(!empty($formResults[$key]['value']))
+                    {
+                        if(!preg_match('/[^A-Za-z0-9]/', $formResults[$key]['value']))
+                        {
+                            $formResults[$key]['error'] = $key." must contain at least one special character";
+                        }
+                    }
+                    break;
+                case 'matchesPassword':
+                    if(!($formResults[$key]['value'] === $formResults['Password']['value']))
+                    {
+                        $formResults[$key]['error'] = "Passwords do not match";
+                    }
+                    break;
+                case 'emailExists':
+                    if(!empty($formResults[$key]['value']))
+                    {
+                        if(userExists($formResults[$key]['value']))
+                        {
+                            $formResults[$key]['error'] = "This user does not exist";
+                        }
+                    }
+                    break;
+                case 'toLowerCase':
+                    if(!empty($formResults[$key]['value']))
+                    {
+                        $formResults[$key]['value'] = strtolower($formResults[$key]['value']);
+                    }
                     break;
                 }
         }   
