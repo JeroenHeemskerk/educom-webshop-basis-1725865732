@@ -5,12 +5,9 @@ function showFormField($key, $metaData, $formResult)
     echo '
     <div class="form-group">
     <label class="control-label">'.$metaData['label'].'</label>';
+    
     switch($metaData['type'])
     {
-        case 'text':
-            echo '
-            <input class="form-control" name="'.$key.'" placeholder= "'.$metaData['placeholder'].'" value="'.$formResult['value'].'"></input>';
-        break;
         case 'textarea':
             echo '
             <textarea class="form-control" name="'.$key.'" placeholder= "'.$metaData['placeholder'].'" ">'.$formResult['value'].'</textarea>';
@@ -44,15 +41,9 @@ function showFormField($key, $metaData, $formResult)
                 </div>';
             }
         break;
-        case 'password':
-            echo '
-            <input class="form-control" type="password" name="'.$key.'" placeholder= "'.$metaData['placeholder'].'" value="'.$formResult['value'].'"></input>';
-            if(!empty($formResult['error']))
-            {
-                echo '<span class="error">* '.$formResult['error'].'</span>';
-            }
-        break;
         default:
+        echo '
+        <input type="'.$metaData['type'].'"class="form-control" name="'.$key.'" placeholder= "'.$metaData['placeholder'].'" value="'.$formResult['value'].'"></input>';
         break;
     }
     
