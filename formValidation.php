@@ -1,10 +1,7 @@
 <?php
-include "defines.php";
 include "fileHandler.php";
 function validateField($key, $metaData, &$formResults)
     {
-        global $COMMUNICATION_PREFERENCES;
-        global $GENDERS;
         foreach($metaData['validations'] as $validation)
         {
             $parts = explode(':', $validation, 2);
@@ -19,10 +16,10 @@ function validateField($key, $metaData, &$formResults)
                     switch ($key)
                     {
                         case 'communicationPreference':
-                            if(!in_array($formResults[$key]['value'], $COMMUNICATION_PREFERENCES))
+                            if(!in_array($formResults[$key]['value'], COMMUNICATION_PREFERENCES))
                             {
                                 $error_string = "";
-                                foreach($COMMUNICATION_PREFERENCES as $communication_method)
+                                foreach(COMMUNICATION_PREFERENCES as $communication_method)
                                 {
                                     $error_string.= '"'.$communication_method.'" ';
                                 }
@@ -31,10 +28,10 @@ function validateField($key, $metaData, &$formResults)
                             break;
 
                         case 'gender':
-                            if(!in_array($formResults[$key]['value'], $GENDERS))
+                            if(!in_array($formResults[$key]['value'], GENDERS))
                             {
                                 $error_string = "";
-                                foreach($GENDERS as $GENDER)
+                                foreach(GENDERS as $GENDER)
                                 {
                                     $error_string.= '"'.$GENDER.'" ';
                                 }

@@ -1,5 +1,5 @@
 <?php
-
+include "defines.php";
 define("allowedPages", ['home.php', 'about.php', 'contact.php', 'register.php', 'login.php']);
 beginDocument();
 $page = getRequestedPage();
