@@ -105,13 +105,18 @@ p
     height: auto;
     margin-top: 66px;
     width: auto;
-    background-color: lightblue;
 }
 
 .dropdown-item .menu-link
 {
     color: white;
     text-decoration: none;
+    padding: 16px;
+    background-color: lightblue;
+}
+.dropdown-item:hover .menu-link:hover
+{ 
+    background-color: rgba(173, 216, 230, 0.541);
 }
 
 .dropdown-item{

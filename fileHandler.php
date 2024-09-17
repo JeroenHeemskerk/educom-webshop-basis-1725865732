@@ -36,25 +36,12 @@ function getUserFromFile($email)
             }
         }
     }
-    return $user;
+    return NULL;
 }
 
 function userExists($email)
 {
-    if(file_exists(userFile)) 
-    { 
-        $fileHandle = fopen(userFile, "r");
-
-        foreach(getAllLines($fileHandle) as $line)
-        {
-            $userData = explode("|", $line, 3);
-            if($userData[0] === $email)
-            {
-                return true;
-            }
-        }
-    }
-    return false;
+    return (getUserFromFile($email) != NULL) ? true : false;
 }
 
 ?>

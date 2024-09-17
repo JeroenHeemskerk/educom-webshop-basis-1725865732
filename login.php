@@ -8,65 +8,42 @@ function showTitle()
 
 function validateLogin($email, $password)
 {
-    echo "validateLogin";
     $user = getUserFromFile($email);
-    var_dump($user['Password']);
-    var_dump($password);
-    if($user['Password'] == $password)
+    if($user != null)
     {
-        echo "true";
-        return true;
+        if($user['Password'] == $password)
+        {
+            return true;
+        }
     }
-    echo "false";
     return false;
 }
 
 function showBody()
 {
+    $validInput = false;
+    $loginErrorMessage = "";
     if ($_SERVER['REQUEST_METHOD'] == 'POST') 
     {
         $formResults = getDataFromPost(getFormData("login"));
-        $valid = !containsErrors($formResults);
-
-        if(!$valid)
-        {
-            openForm("login.php", "Login");
-            foreach(getFormData("login") as $key => $metaData)
-            {
-                $formResult = ['value' => $formResults[$key]['value'], 'error' => $formResults[$key]['error']];
-                showFormField($key, $metaData, $formResult);
-            }
-            closeForm();
-        }
-        else
-        {
-            if(validateLogin($formResults['Email']['value'], $formResults['Password']['value']))
-            {
-                header("Location: index.php?");
-            }
-            else
-            {
-                openForm("login.php", "Login");
-                foreach(getFormData("login") as $key => $metaData)
-                {
-                    $formResult = ['value' => $formResults[$key]['value'], 'error' => $formResults[$key]['error']];
-                    showFormField($key, $metaData, $formResult);
-                }
-                closeForm("Login");
-            }
-        }
+        $validInput = !containsErrors($formResults);
+        $loginErrorMessage = '<div class="error">Combination of email and password is incorrect</div>';
     }
-    else
+    else //Method is GET
     {
-        //show empty form
-        openForm("login.php", "Login");
-        foreach(getFormData("login") as $key => $metaData)
-        {
-            $formResult = ['value' => '', 'error' => ''];
-            showFormField($key, $metaData, $formResult);
-        }
-        closeForm("Login");
+        $formResults = createEmptyFormData("login");
+    }
 
+    $valid = $validInput && validateLogin($formResults['Email']['value'], $formResults['Password']['value']);
+
+    if(!$valid)
+    {
+        echo $loginErrorMessage;
+        showForm($formResults, "login", "login.php", "Login", "Login");
+    }
+    else //all data is valid. Show thank you message.
+    {
+        header("Location: index.php?");
     }
 }
 
