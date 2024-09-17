@@ -1,6 +1,8 @@
 <?php
 include "defines.php";
-define("allowedPages", ['home.php', 'about.php', 'contact.php', 'register.php', 'login.php']);
+
+session_start();
+
 beginDocument();
 $page = getRequestedPage();
 showResponsePage($page);
@@ -92,7 +94,7 @@ function showHeadSection()
 
 function showHeader()
 {
-    echo '<header> <h1>My Webshop - ';
+    echo '<header> <h1>';
     echo showTitle();
     echo '</h1>';
     showMenu();
@@ -113,12 +115,35 @@ function showMenu()
         <li class="nav-menu-item">
             <a href="index.php?page=contact.php" class="menu-link">CONTACT</a>
         </li>
-    </ul>';
+        ';
+        if(empty($_SESSION['user'])){
+            echo'
+        <li class="nav-menu-item">
+            <a href="index.php?page=login.php" class="menu-link">LOGIN</a>
+        </li>
+        <li class="nav-menu-item">
+            <a href="index.php?page=register.php" class="menu-link">REGISTER</a>
+        </li>';
+        }else
+        {
+            echo'
+            <li class="nav-menu-item">
+                <a href="index.php?page=logout.php" class="menu-link">LOG OUT</a>
+            </li>';
+        }
+    echo '</ul>';
 }
 
 function showDropDownMenu()
 {
-    echo '
+    /*if(!empty($_SESSION['user'])){
+        echo "yeet";
+    }
+    else
+    {
+        echo "notYeet";
+    }*/
+    /*echo '
     <div class="dropdown-menu">
         <div class="dropdown-menu-trigger">
             <div class="dropdown">
@@ -132,7 +157,7 @@ function showDropDownMenu()
                 </ul>
             </div>
         </div>
-    </div>';
+    </div>';*/
 }
 
 function showFooter()
@@ -143,7 +168,7 @@ function showFooter()
 function showBodySection($requestedPage)
 {
     echo '<body>';
-    require $requestedPage;
+    include_once $requestedPage;
     showHeader();
     showBody();
     showFooter();
@@ -154,6 +179,17 @@ function showBodySection($requestedPage)
 function endDocument()
 {
     echo'</html>';
+}
+
+function startSession($user)
+{
+    session_start();
+    if(session_status() === PHP_SESSION_ACTIVE)
+    {
+        echo "SESSION STARTED";
+    }
+    //showResponsePage("home.php");
+    
 }
 
 ?>

@@ -43,7 +43,11 @@ function showBody()
     }
     else //all data is valid.
     {
-        header("Location: index.php?");
+        $user = getUserFromFile($formResults['Email']['value']);
+        
+        $_SESSION['user'] = ["Email" => $user['Email'], "Name" => $user['Name']];
+        
+        //header("Location: index.php?");
     }
 }
 
