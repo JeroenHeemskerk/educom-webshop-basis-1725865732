@@ -41,7 +41,7 @@ function showBody()
         echo $loginErrorMessage;
         showForm($formResults, "login", "login.php", "Login", "Login");
     }
-    else //all data is valid. Show thank you message.
+    else //all data is valid.
     {
         header("Location: index.php?");
     }

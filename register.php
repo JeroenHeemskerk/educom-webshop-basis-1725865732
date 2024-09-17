@@ -7,38 +7,25 @@ function showTitle()
 }
 function showBody()
 {
+    $valid = false;
     if ($_SERVER['REQUEST_METHOD'] == 'POST') 
     {
         $formResults = getDataFromPost(getFormData("register"));
         $valid = !containsErrors($formResults);
-
-        if(!$valid)
-        {
-            openForm("register.php", "Register");
-            foreach(getFormData("register") as $key => $metaData)
-            {
-                $formResult = ['value' => $formResults[$key]['value'], 'error' => $formResults[$key]['error']];
-                showFormField($key, $metaData, $formResult);
-            }
-            closeForm("Register");
-        }
-        else
-        {
-            writeUserToFile($formResults['Email']['value'], $formResults['Name']['value'], $formResults['Password']['value']);
-            header("Location: index.php?page=login.php");
-        }
     }
-    else
+    else //Method is GET
     {
-        //show empty form
-        openForm("register.php", "Register");
-        foreach(getFormData("register") as $key => $metaData)
-        {
-            $formResult = ['value' => '', 'error' => ''];
-            showFormField($key, $metaData, $formResult);
-        }
-        closeForm("Register");
+        $formResults = createEmptyFormData("register");
+    }
 
+    if(!$valid)
+    {
+        showForm($formResults, "register", "register.php", "Register", "Register");
+    }
+    else //all data is valid.
+    {
+        writeUserToFile($formResults['Email']['value'], $formResults['Name']['value'], $formResults['Password']['value']);
+        header("Location: index.php?page=login.php");
     }
 }
 
