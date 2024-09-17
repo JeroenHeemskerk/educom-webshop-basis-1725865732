@@ -46,4 +46,14 @@ function getFormData($form)
     }
 }
 
+function createEmptyFormData($formDataName)
+{
+    $formResults;
+    //fill an empty form so formBuilder has access to array offset
+    foreach(GetFormData($formDataName) as $key => $metaData)
+    {
+        $formResults[$key] = ['value' => '', 'error' =>''];
+    }
+    return $formResults;
+}
 ?>

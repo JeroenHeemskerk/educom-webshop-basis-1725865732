@@ -1,11 +1,21 @@
 <?php
+function showForm($formResults, $formDataName, $target, $legend, $buttonText)
+{
+    openForm($target, $legend);
+    foreach(getFormData($formDataName) as $key => $metaData)
+    {
+        $formResult = ['value' => $formResults[$key]['value'], 'error' => $formResults[$key]['error']];
+        showFormField($key, $metaData, $formResult);
+    }
+    closeForm($buttonText);
+}
 
 function showFormField($key, $metaData, $formResult)
 {
     echo '
     <div class="form-group">
     <label class="control-label">'.$metaData['label'].'</label>';
-    
+
     switch($metaData['type'])
     {
         case 'textarea':
