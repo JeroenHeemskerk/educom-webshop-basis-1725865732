@@ -1,6 +1,4 @@
 <?php
-include "formData.php";
-include "formBuilder.php";
     function showTitle()
     {
         echo 'Contact';

@@ -1,9 +1,7 @@
 <?php
-include "formData.php";
-include "formBuilder.php";
 function showTitle()
 {
-    echo "Login";
+    //echo "Login";
 }
 
 function validateLogin($email, $password)
@@ -26,8 +24,9 @@ function showBody()
     if ($_SERVER['REQUEST_METHOD'] == 'POST') 
     {
         $formResults = getDataFromPost(getFormData("login"));
-        $validInput = !containsErrors($formResults);
-        $loginErrorMessage = '<div class="error">Combination of email and password is incorrect</div>';
+        //var_dump($formResults);
+            $validInput = !containsErrors($formResults);
+            $loginErrorMessage = '<div class="error">Combination of email and password is incorrect</div>';
     }
     else //Method is GET
     {
@@ -46,8 +45,6 @@ function showBody()
         $user = getUserFromFile($formResults['Email']['value']);
         
         $_SESSION['user'] = ["Email" => $user['Email'], "Name" => $user['Name']];
-        
-        //header("Location: index.php?");
     }
 }
 

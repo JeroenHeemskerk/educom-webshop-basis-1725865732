@@ -188,4 +188,39 @@ function validateField($key, $metaData, &$formResults)
         }
         return $containsErrors;
     }
+
+    function getTargetPage($formDataName)
+    {
+        //echo $formDataName;
+        if(!empty($formDataName))
+        {
+            if(validateInput($formDataName))
+            {
+                $requestedPage = "";
+                switch ($formDataName)
+                {
+                    case 'register':
+                        echo "CASE REGISTER";
+                        $requestedPage =  "login.php";
+                        break;
+                    case 'login':
+                        $requestedPage =  "home.php";
+                        break;
+                    default:
+                        $requestedPage =  getPostVar('page', 'home.php');
+                        break;
+                }
+                return $requestedPage;
+            }
+        }
+        //FormDataName doesn't exist or input is not valid
+        return getPostVar('page', 'home.php');
+    }
+
+    function validateInput($formDataName)
+    {
+        $formResults = getDataFromPost(getFormData($formDataName));
+        return !containsErrors($formResults);
+    }
+    
 ?>

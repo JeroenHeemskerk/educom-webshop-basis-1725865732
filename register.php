@@ -1,6 +1,4 @@
 <?php
-include "formData.php";
-include "formBuilder.php";
 function showTitle()
 {
     echo "Register";
@@ -25,7 +23,7 @@ function showBody()
     else //all data is valid.
     {
         writeUserToFile($formResults['Email']['value'], $formResults['Name']['value'], $formResults['Password']['value']);
-        header("Location: index.php?page=login.php");
+        //header("Location: index.php?page=login.php");
     }
 }
 

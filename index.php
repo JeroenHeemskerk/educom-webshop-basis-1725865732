@@ -1,5 +1,8 @@
 <?php
 include "defines.php";
+include "formValidation.php";
+include "formData.php";
+include "formBuilder.php";
 
 session_start();
 
@@ -11,9 +14,13 @@ function getRequestedPage()
     $requestedType = $_SERVER['REQUEST_METHOD'];
     if($requestedType == 'POST')
     {
-        $requestedPage = getPostVar('page', 'home.php');
+        $formDataName = getPostVar('formDataName');
+        if(!empty($formDataName))
+        {
+            $requestedPage = getTargetPage($formDataName);
+        }
     }
-    else
+    else // Method is GET
     {
         $requestedPage = getUrlVar('page', 'home.php');
     }
@@ -35,7 +42,6 @@ function showResponsePage($requestedPage)
 
 function getDataFromPost($metaArray)
 {
-    include 'formValidation.php';
     $formResults = [];
     foreach($metaArray as $key => $metaData)
     {
@@ -98,7 +104,6 @@ function showHeader()
     echo showTitle();
     echo '</h1>';
     showMenu();
-    showDropDownMenu();
     echo '</header>';
 }
 
@@ -134,32 +139,6 @@ function showMenu()
     echo '</ul>';
 }
 
-function showDropDownMenu()
-{
-    /*if(!empty($_SESSION['user'])){
-        echo "yeet";
-    }
-    else
-    {
-        echo "notYeet";
-    }*/
-    /*echo '
-    <div class="dropdown-menu">
-        <div class="dropdown-menu-trigger">
-            <div class="dropdown">
-                <ul class="dropdown-menu">
-                    <li class="dropdown-item">
-                        <a href="index.php?page=login.php" class="menu-link">LOGIN</a>
-                    </li>
-                    <li class="dropdown-item">
-                        <a href="index.php?page=register.php" class="menu-link">REGISTER</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>';*/
-}
-
 function showFooter()
 {
     echo '<footer> &copy 2024 Jochem Grootherder </footer>';
@@ -179,17 +158,6 @@ function showBodySection($requestedPage)
 function endDocument()
 {
     echo'</html>';
-}
-
-function startSession($user)
-{
-    session_start();
-    if(session_status() === PHP_SESSION_ACTIVE)
-    {
-        echo "SESSION STARTED";
-    }
-    //showResponsePage("home.php");
-    
 }
 
 ?>

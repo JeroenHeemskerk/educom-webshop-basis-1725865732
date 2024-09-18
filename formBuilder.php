@@ -1,7 +1,7 @@
 <?php
 function showForm($formResults, $formDataName, $target, $legend, $buttonText)
 {
-    openForm($target, $legend);
+    openForm($formDataName, $target, $legend);
     foreach(getFormData($formDataName) as $key => $metaData)
     {
         $formResult = ['value' => $formResults[$key]['value'], 'error' => $formResults[$key]['error']];
@@ -66,12 +66,13 @@ function showFormField($key, $metaData, $formResult)
 }
 
 
-function openForm($target, $legend)
+function openForm($formDataName, $target, $legend)
 {
     echo '
     <form method="POST" action="index.php?">
         <fieldset>
             <input type="hidden" name="page" value="'.$target.'">
+            <input type="hidden" name="formDataName" value="'.$formDataName.'">
             <legend>'.$legend.'</legend>';
 }
 
