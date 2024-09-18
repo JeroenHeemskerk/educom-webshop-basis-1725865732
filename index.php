@@ -1,10 +1,9 @@
 <?php
+session_start();
 include "defines.php";
 include "formValidation.php";
 include "formData.php";
 include "formBuilder.php";
-
-session_start();
 
 beginDocument();
 $page = getRequestedPage();
@@ -15,7 +14,7 @@ function getRequestedPage()
     if($requestedType == 'POST')
     {
         $formDataName = getPostVar('formDataName');
-        $requestedPage = getTargetPage($formDataName);
+        $requestedPage = handleNewPageRequest($formDataName);
     }
     else // Method is GET
     {
@@ -23,12 +22,11 @@ function getRequestedPage()
         if($requestedPage === 'logout.php')
         {
             session_unset();
-            session_destroy();
+            updateAllowedPages();
             $requestedPage = 'home.php';
         }
     }
-    
-    if(!in_array($requestedPage, allowedPages))
+    if(!in_array($requestedPage, $_SESSION['allowedPages']))
     {
         echo '<script>alert("Invalid page requested, redirecting to homepage");</script>';
         $requestedPage = 'home.php';

@@ -195,7 +195,7 @@ function validateField($key, $metaData, &$formResults)
         return $containsErrors;
     }
 
-    function getTargetPage($formDataName)
+    function handleNewPageRequest($formDataName)
     {
         if(!empty($formDataName))
         {
@@ -214,6 +214,7 @@ function validateField($key, $metaData, &$formResults)
                     case 'login':
                         $email = getPostVar('Email');
                         $_SESSION['user'] = getUserFromFile($email);
+                        updateAllowedPages();
                         $requestedPage =  "home.php";
                         break;
                     default:
