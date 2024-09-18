@@ -197,7 +197,6 @@ function validateField($key, $metaData, &$formResults)
 
     function getTargetPage($formDataName)
     {
-        //echo $formDataName;
         if(!empty($formDataName))
         {
             if(validateInput($formDataName))
@@ -206,9 +205,15 @@ function validateField($key, $metaData, &$formResults)
                 switch ($formDataName)
                 {
                     case 'register':
+                        $email = getPostVar('Email');
+                        $name = getPostVar('Name');
+                        $password = getPostVar('Password');
+                        writeUserToFile($email, $name, $password);
                         $requestedPage =  "login.php";
                         break;
                     case 'login':
+                        $email = getPostVar('Email');
+                        $_SESSION['user'] = getUserFromFile($email);
                         $requestedPage =  "home.php";
                         break;
                     default:

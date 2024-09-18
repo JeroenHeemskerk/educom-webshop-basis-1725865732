@@ -20,6 +20,12 @@ function getRequestedPage()
     else // Method is GET
     {
         $requestedPage = getUrlVar('page', 'home.php');
+        if($requestedPage === 'logout.php')
+        {
+            session_unset();
+            session_destroy();
+            $requestedPage = 'home.php';
+        }
     }
     
     if(!in_array($requestedPage, allowedPages))
