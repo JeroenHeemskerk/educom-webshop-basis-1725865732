@@ -159,7 +159,7 @@ function validateField($key, $metaData, &$formResults)
                 case 'emailExists':
                     if(!empty($formResults[$key]['value']))
                     {
-                        if(userExists($formResults[$key]['value']))
+                        if(!userExists($formResults[$key]['value']))
                         {
                             $formResults[$key]['error'] = "This user does not exist";
                         }
@@ -169,6 +169,12 @@ function validateField($key, $metaData, &$formResults)
                     if(!empty($formResults[$key]['value']))
                     {
                         $formResults[$key]['value'] = strtolower($formResults[$key]['value']);
+                    }
+                    break;
+                case 'loginValid':
+                    if(!validateLogin($formResults['Email']['value'], $formResults['Password']['value']))
+                    {
+                        $formResults[$key]['error'] = "Combination of email and password is incorrect";
                     }
                     break;
                 }
@@ -200,7 +206,6 @@ function validateField($key, $metaData, &$formResults)
                 switch ($formDataName)
                 {
                     case 'register':
-                        echo "CASE REGISTER";
                         $requestedPage =  "login.php";
                         break;
                     case 'login':
@@ -222,5 +227,20 @@ function validateField($key, $metaData, &$formResults)
         $formResults = getDataFromPost(getFormData($formDataName));
         return !containsErrors($formResults);
     }
+
+    
+function validateLogin($email, $password)
+{
+    $user = getUserFromFile($email);
+    if($user != null)
+    {
+        if($user['Password'] == $password)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
     
 ?>

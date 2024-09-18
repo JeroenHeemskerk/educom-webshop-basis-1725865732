@@ -15,10 +15,7 @@ function getRequestedPage()
     if($requestedType == 'POST')
     {
         $formDataName = getPostVar('formDataName');
-        if(!empty($formDataName))
-        {
-            $requestedPage = getTargetPage($formDataName);
-        }
+        $requestedPage = getTargetPage($formDataName);
     }
     else // Method is GET
     {

@@ -7,12 +7,12 @@
     function showBody()
     {
         $valid = false;
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') 
+        if (getPostVar("formDataName") === "contact")
         {
             $formResults = getDataFromPost(getFormData("contact"));
             $valid = !containsErrors($formResults);
         }
-        else //Method is GET
+        else
         {
             $formResults = createEmptyFormData("contact");
         }

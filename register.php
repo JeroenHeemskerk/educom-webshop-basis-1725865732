@@ -6,12 +6,12 @@ function showTitle()
 function showBody()
 {
     $valid = false;
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') 
+    if (getPostVar("formDataName") === "register")
     {
         $formResults = getDataFromPost(getFormData("register"));
         $valid = !containsErrors($formResults);
     }
-    else //Method is GET
+    else
     {
         $formResults = createEmptyFormData("register");
     }

@@ -17,22 +17,25 @@ function getAllLines($fileHandle)
 
 function getUserFromFile($email)
 {
-    $user = ["Email" => '', "Name" => '', "Password" => ''];
-   
-    if(file_exists(userFile)) 
-    { 
-        $fileHandle = fopen(userFile, "r");
+    if(!empty($email))
+    {
+        $user = ["Email" => '', "Name" => '', "Password" => ''];
+    
+        if(file_exists(userFile)) 
+        { 
+            $fileHandle = fopen(userFile, "r");
 
-        foreach(getAllLines($fileHandle) as $line)
-        {
-            $userData = explode("|", $line, 3);
-            if($userData[0] === $email)
+            foreach(getAllLines($fileHandle) as $line)
             {
-                $user['Email'] = trim($userData[0]);
-                $user['Name'] = trim($userData[1]);
-                $user['Password'] = trim($userData[2]);
-                fclose($fileHandle);
-                return $user;
+                $userData = explode("|", $line, 3);
+                if($userData[0] === $email)
+                {
+                    $user['Email'] = trim($userData[0]);
+                    $user['Name'] = trim($userData[1]);
+                    $user['Password'] = trim($userData[2]);
+                    fclose($fileHandle);
+                    return $user;
+                }
             }
         }
     }
