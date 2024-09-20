@@ -195,39 +195,6 @@ function validateField($key, $metaData, &$formResults)
         return $containsErrors;
     }
 
-    function handleNewPageRequest($formDataName)
-    {
-        if(!empty($formDataName))
-        {
-            if(validateInput($formDataName))
-            {
-                $requestedPage = "";
-                switch ($formDataName)
-                {
-                    case 'register':
-                        $email = getPostVar('Email');
-                        $name = getPostVar('Name');
-                        $password = getPostVar('Password');
-                        writeUserToFile($email, $name, $password);
-                        $requestedPage =  "login.php";
-                        break;
-                    case 'login':
-                        $email = getPostVar('Email');
-                        $_SESSION['user'] = getUserFromFile($email);
-                        updateAllowedPages();
-                        $requestedPage =  "home.php";
-                        break;
-                    default:
-                        $requestedPage =  getPostVar('page', 'home.php');
-                        break;
-                }
-                return $requestedPage;
-            }
-        }
-        //FormDataName doesn't exist or input is not valid
-        return getPostVar('page', 'home.php');
-    }
-
     function validateInput($formDataName)
     {
         $formResults = getDataFromPost(getFormData($formDataName));

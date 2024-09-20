@@ -7,24 +7,18 @@ include "formBuilder.php";
 
 beginDocument();
 $page = getRequestedPage();
+$page = HandlePageRequest($page);
 showResponsePage($page);
 function getRequestedPage()
 {
     $requestedType = $_SERVER['REQUEST_METHOD'];
     if($requestedType == 'POST')
     {
-        $formDataName = getPostVar('formDataName');
-        $requestedPage = handleNewPageRequest($formDataName);
+        $requestedPage = getPostVar('page', 'home.php');
     }
     else // Method is GET
     {
         $requestedPage = getUrlVar('page', 'home.php');
-        if($requestedPage === 'logout.php')
-        {
-            session_unset();
-            updateAllowedPages();
-            $requestedPage = 'home.php';
-        }
     }
     if(!in_array($requestedPage, $_SESSION['allowedPages']))
     {
@@ -39,6 +33,40 @@ function showResponsePage($requestedPage)
     showHeadSection();
     showBodySection($requestedPage);
     endDocument();
+}
+
+function HandlePageRequest($page)
+{
+    switch($page)
+    {
+        case 'register.php':
+            if(validateInput("register"))
+            {
+                $email = getPostVar('Email');
+                $name = getPostVar('Name');
+                $password = getPostVar('Password');
+                writeUserToFile($email, $name, $password);
+                return "login.php";
+            }
+            break;
+        case 'login.php':
+            if(validateInput("login"))
+            {
+                $email = getPostVar('Email');
+                $_SESSION['user'] = getUserFromFile($email);
+                updateAllowedPages();
+                return  "home.php";
+            }
+            break;
+            case 'logout.php':
+                session_unset();
+                updateAllowedPages();
+                return 'home.php';
+                break;
+        default:
+            break;
+    }
+    return $page;
 }
 
 function getDataFromPost($metaArray)
