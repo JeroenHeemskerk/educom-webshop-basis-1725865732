@@ -1,8 +1,8 @@
 <?php
-define("userFile", "users.txt");
+define("USERFILE", "users.txt");
 function writeUserToFile($email, $name, $password)
 {
-    $myFile = fopen(userFile, "a") or die("Unable to open file!");
+    $myFile = fopen(USERFILE, "a") or die("Unable to open file!");
     fwrite($myFile, $email. "|". $name. "|". $password. PHP_EOL);
     fclose($myFile);
 }
@@ -17,29 +17,38 @@ function getAllLines($fileHandle)
 
 function getUserFromFile($email)
 {
-    if(!empty($email))
+    if(empty($email) || !file_exists(USERFILE))
     {
-        $user = ["Email" => '', "Name" => '', "Password" => ''];
-    
-        if(file_exists(userFile)) 
-        { 
-            $fileHandle = fopen(userFile, "r");
+        return NULL;        
+    }
 
-            foreach(getAllLines($fileHandle) as $line)
+    try
+    {
+        $fileHandle = fopen(USERFILE, "r");
+        $user = NULL;
+        foreach(getAllLines($fileHandle) as $line)
+        {
+            $userData = explode("|", $line, 3);
+            if($userData[0] === $email)
             {
-                $userData = explode("|", $line, 3);
-                if($userData[0] === $email)
-                {
-                    $user['Email'] = trim($userData[0]);
-                    $user['Name'] = trim($userData[1]);
-                    $user['Password'] = trim($userData[2]);
-                    fclose($fileHandle);
-                    return $user;
-                }
+                $user = [
+                "Email" => trim($userData[0]), 
+                "Name" => trim($userData[1]), 
+                "Password" => trim($userData[2])
+                ];
+                break;
             }
         }
     }
-    return NULL;
+    catch   (\Exception $e)
+    {
+
+    }
+    finally
+    {
+        fclose($fileHandle);
+    }    
+    return $user;
 }
 
 function userExists($email)
