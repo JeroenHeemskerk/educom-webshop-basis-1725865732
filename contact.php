@@ -23,12 +23,18 @@
         }
         else //all data is valid. Show thank you message.
         {
-            echo "Thank you for your message, we will be in contact soon. </br>
-            Your details are: <br>";
-            foreach($formResults as $key => $formResult)
-            {
-                echo $key . ": " .$formResult['value']. "<br>";
-            }
+            showThankYouMessage($formResults);
         }
     }
+
+function showThankYouMessage($formResults)
+{
+    echo "Thank you for your message, we will be in contact soon. </br>
+    Your details are: <br>";
+    foreach($formResults as $key => $formResult)
+    {
+        echo $key . ": " .$formResult['value']. "<br>";
+    }
+
+}
     ?>
