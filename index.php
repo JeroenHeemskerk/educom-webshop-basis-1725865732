@@ -4,6 +4,7 @@ include "defines.php";
 include "formValidation.php";
 include "formData.php";
 include "formBuilder.php";
+updateAllowedPages();
 
 beginDocument();
 $page = getRequestedPage();
